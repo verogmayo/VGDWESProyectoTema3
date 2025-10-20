@@ -160,8 +160,8 @@ siguientes ejercicios. Discusión: diferencia entre librería de funciones y cla
                     <th>20</th>
                     <td class="texto">Convertir la LibreriaValidacionFormularios.php en una clase ValidacionFormularios.php. El profesor facilitará a los alumnos la clase
 AAMMDDValidacionFormularios.php desarrollada en el curso anterior como punto de partida.</td>
-                   <td class="iconos"><a href=""><!--<i class="fa-solid fa-circle-play"></i>--></a>  </td>
-                    <td class="iconos"> <a href="mostrarcodigo/muestraEjercicio20.php"><!--<i class="fa-solid fa-eye"></i>--> </a>  </td>
+                   <td class="iconos"><a href="codigoPHP/ejercicio20.php"><i class="fa-solid fa-circle-play"></i></a>  </td>
+                   <td class="iconos"> <a href="mostrarcodigo/muestraEjercicio20.php"><i class="fa-solid fa-eye"></i> </a>  </td>
                 </tr>
                 <tr>
                     <th>21</th>

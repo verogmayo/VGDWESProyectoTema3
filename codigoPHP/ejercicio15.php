@@ -8,6 +8,7 @@
     </head>
     <body>
         <header class="header">
+             <a href="../indexProyectoTema3.php">volver</a>
             <h1>Ejercicio 15</h1>
         </header>
         <main>
@@ -27,7 +28,7 @@
                  */
                 //Creación e inicialización de un array con los sueldos de lunes a domingo
                 /** @var Array $aSalarioXDia Array del salrario de todos los dias de la semana. */
-                $aSalarioXDia = array(
+                $aSalarioXDia = [
                     'Lunes' => 100,
                     'Martes' => 150,
                     'Miercoles' => 80,
@@ -35,7 +36,7 @@
                     'Viernes' => 120,
                     'Sabado' => 110,
                     'Domingo' => 160
-                );
+                ];
                 $totalHorasSemana = 0;
 
                 echo'<h3>Horas trabajadas a lo largo de la semana.</h3><br>';
@@ -56,7 +57,7 @@
         <footer class="footer">
             <div class="footerContent">
                 <div><p class="copyright">
-                        2025-26 IES LOS SAUCES. &#169;Todos los derechos reservados.</p> <address><a href="../indexProyectoTema3.php">Véronique Grué.</a> Fecha de Actualización :
+                        2025-26 IES LOS SAUCES. &#169;Todos los derechos reservados.</p> <address><a href="../../VGDWESProyectoDWES/indexProyectoDWES.html">Véronique Grué.</a> Fecha de Actualización :
                         <time datetime="2025-10-13"></time> 13-10-2025 </address>
                     </div>
 

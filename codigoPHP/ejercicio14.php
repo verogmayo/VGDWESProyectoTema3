@@ -8,13 +8,24 @@
     </head>
     <body>
         <header class="header">
+             <a href="../indexProyectoTema3.php">volver</a>
             <h1>Ejercicio 14</h1>
         </header>
         <main>
             <section>
                 <?php
-                require_once 'miLibreria.php'; //para inclir la libreria miLibreria.php
-                require_once 'miLibreriaStatic.php'; //para inclir la libreria miLibreriaStatic.php
+                /**
+                 * @author Véronique Grué
+                 * @version 1.0
+                 * @date 2025-10-20 
+                 * 
+                 *
+                 * Ejercicio 14
+                 * * Mostrar el contenido de las variables superglobales
+                 */
+                
+                require '../core/miLibreria.php'; //para inclir la libreria miLibreria.php
+                require '../core/miLibreriaStatic.php'; //para inclir la libreria miLibreriaStatic.php
 
                 $a = random_int(0, 100);
                 $b = random_int(0, 100);
@@ -43,7 +54,7 @@
         <footer class="footer">
             <div class="footerContent">
                 <div><p class="copyright">
-                        2025-26 IES LOS SAUCES. &#169;Todos los derechos reservados.</p> <address><a href="../indexProyectoTema3.php">Véronique Grué.</a> Fecha de Actualización :
+                        2025-26 IES LOS SAUCES. &#169;Todos los derechos reservados.</p> <address><a href="../../VGDWESProyectoDWES/indexProyectoDWES.html">Véronique Grué.</a> Fecha de Actualización :
                         <time datetime="2025-10-19"></time> 19-10-2025 </address>
                     </p></div>
 

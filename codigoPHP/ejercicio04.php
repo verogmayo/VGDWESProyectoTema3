@@ -17,6 +17,7 @@
     </head>
     <body>
         <header class="header">
+             <a href="../indexProyectoTema3.php">volver</a>
             <h1>Ejercicio 04</h1>
         </header>
         <main>
@@ -55,7 +56,7 @@
         <footer class="footer">
             <div class="footerContent">
                 <div><p class="copyright">
-                        2025-26 IES LOS SAUCES. &#169;Todos los derechos reservados.</p> <address><a href="../indexProyectoTema3.php">Véronique Grué.</a> Fecha de Actualización :
+                        2025-26 IES LOS SAUCES. &#169;Todos los derechos reservados.</p> <address><a href="../../VGDWESProyectoDWES/indexProyectoDWES.html">Véronique Grué.</a> Fecha de Actualización :
                         <time datetime="2025-10-10"></time> 10-10-2025 </address>
                 </div>
 
