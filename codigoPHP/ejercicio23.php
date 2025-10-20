@@ -52,36 +52,30 @@
             #preg{
                 width: 200px;
             }
+            #tipoFormulario{
+                background-color: gainsboro;
+            }
+            #nombre, #pregunta{
+                background-color:rgb(252, 248, 204);
+                font-weight: bold;
+            }
+            li{
+                font-size: 20px;
+            }
+            h3{
+                font-size: 25px;
+            }
 
 
         </style>
     </head>
     <body>
         <header class="header">
-             <a href="../indexProyectoTema3.php">volver</a>
+            <a href="../indexProyectoTema3.php">volver</a>
             <h1>Ejercicio 23</h1>
         </header>
         <main>
-            <section>
-                <h2>Rellena el formulario.</h2>
-                <form action="" method="post">
-                    <label for="nombre">Nombre completo:</label><br>
-                    <input name="nombre" id="nombre" type="text"><br>
-
-                    <label for="edad">Edad:</label><br>
-                    <input name="edad" id="edad" type="number"><br><br>
-
-                    <label id="preg">Pregunta de seguridad:</label>
-                    <label for="pregunta" class="pregunta">Cual es el nombre de tu mascota? </label><br>
-                    <input name="pregunta" id="pregunta" type="text"><br><br>
-
-                    <label for="carnet">Marca si tienes carnet de conducir:</label>
-                    <input type="checkbox" name="boolean" id="carnet"><br>
-
-                    <button type="submit" name="submit">Enviar</button>
-                </form>  
-            </section>
-            <?php
+                        <?php
             /**
              * @author Véronique Grué
              * @version 1.0
@@ -136,14 +130,40 @@
                     echo "Carnet de conducir: " . ($carnet ? "Sí" : "No") . "<br>";
                     echo "Nombre de tu mascota: " . $pregunta;
                 }
+            }else{
+                 ?>
+                <section>
+                <h2>Rellena el formulario.</h2>
+                <form action="" method="post">
+                    <label for="tipoFormulario">Tipo del formulario</label><br>
+                    <input name="tipoFormulario" id="tipoFormulario" type="text" value="Formulario de Seguridad" readonly><br>
+
+                    <label for="nombre">Nombre completo:</label><br>
+                    <input name="nombre" id="nombre" type="text"><br>
+
+                    <label for="edad">Edad:</label><br>
+                    <input name="edad" id="edad" type="number"><br><br>
+
+                    <label id="preg">Pregunta de seguridad:</label>
+                    <label for="pregunta" class="pregunta">Cual es el nombre de tu mascota? </label><br>
+                    <input name="pregunta" id="pregunta" type="text"><br><br>
+
+                    <label for="carnet">Marca si tienes carnet de conducir:</label>
+                    <input type="checkbox" name="boolean" id="carnet"><br>
+
+                    <button type="submit" name="submit">Enviar</button>
+                </form>  
+            </section>
+             <?php
             }
-            ?>
-            <?php
+           
+           
             // Mostrar errores si hay
             if (!empty($aErrores)) {
+                echo'<br><h3>Respuestas del formulario :</h3><br>';
                 echo "<div style='color:red;'><ul>";
-                foreach ($aErrores as $err) {
-                    echo "<li>" . $err . "</li>";
+                foreach ($aErrores as $error) {
+                    echo "<li>" . $error . "</li>";
                 }
                 echo "</ul></div>";
             }

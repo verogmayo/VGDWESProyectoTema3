@@ -57,24 +57,6 @@
         </header>
         <main>
 
-
-            <!-- // https://www.php.net/manual/es/tutorial.forms.php -->
-            <section>
-                <h2>Rellena el formulario.</h2>
-                <form action="" method="post">
-                    <label for="nombre">Nombre completo:</label>
-                    <input name="nombre" id="nombre" type="text"><br>
-
-                    <label for="edad">Edad:</label>
-                    <input name="edad" id="edad" type="number"><br>
-
-                    <label for="carnet">Marca si tienes carnet de conducir:</label>
-                    <input type="checkbox" name="boolean" id="carnet"><br>
-
-                    <button type="submit">Enviar</button>
-                </form>  
-            </section>
-
             <?php
             /**
              * @author Véronique Grué
@@ -97,9 +79,28 @@
                 } else {
                     echo 'No';
                 }
+            }else{
+            ?>
+            
+            <!-- // https://www.php.net/manual/es/tutorial.forms.php -->
+            <section>
+                <h2>Rellena el formulario.</h2>
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                    <label for="nombre">Nombre completo:</label>
+                    <input name="nombre" id="nombre" type="text"><br>
+
+                    <label for="edad">Edad:</label>
+                    <input name="edad" id="edad" type="number"><br>
+
+                    <label for="carnet">Marca si tienes carnet de conducir:</label>
+                    <input type="checkbox" name="boolean" id="carnet"><br>
+
+                    <button type="submit">Enviar</button>
+                </form>  
+            </section>
+            <?php
             }
             ?>
-
 
         </main>
         <footer class="footer">
