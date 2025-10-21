@@ -58,7 +58,7 @@
             }
             li{
                 font-size: 20px;
-                
+
             }
             h3{
                 font-size: 25px;
@@ -69,11 +69,11 @@
     </head>
     <body>
         <header class="header">
-             <a href="../indexProyectoTema3.php">volver</a>
+            <a href="../indexProyectoTema3.php">volver</a>
             <h1>Ejercicio 24</h1>
         </header>
         <main>
-           
+
             <?php
             /**
              * @author Véronique Grué
@@ -88,7 +88,6 @@
              * pero las respuestas que habíamos tecleado correctamente aparecerán en el formulario 
              * y no tendremos que volver a teclearlas.
              */
-            
             /** @var array $aErrores Array para almacenar mensajes de error de validación. */
             $aErrores = [];
             /** @var string $nombre Nombre completo introducido por el usuario. */
@@ -99,71 +98,83 @@
             $pregunta = '';
             /** @var boolean $carnet Indica si el usuario tiene carnet de conducir (checkbox marcado o no). */
             $carnet = false;
-             
+
             if (isset($_REQUEST['submit'])) {
-                
-                $nombre = $_REQUEST['nombre'] ?? '';//guarda el valor del campo, y sino gurada vacio
+
+                $nombre = $_REQUEST['nombre'] ?? ''; //guarda el valor del campo, y sino gurada vacio
                 $edad = $_REQUEST['edad'] ?? '';
                 $pregunta = $_REQUEST['pregunta'] ?? '';
                 $carnet = isset($_REQUEST['boolean']);
 
-                // Validaciones
-               
-                if ($nombre === '') {
-                    $aErrores[] = "<br>El nombre no puede estar vacío.";
+                //Validaciones -----------------------
+                // Nombre no vacío
+                if (isset($_REQUEST['submit']) && empty($_REQUEST['nombre'])) {
+                    $aErrores[] = "El nombre no puede estar vacío.";
                 }
 
-                if ((int) $edad < 0 || (int) $edad > 120) {
-                    $aErrores[] = "<br>La edad no es válida (0-120).";
+                // Edad entre 0 y 120
+                if (!empty($_REQUEST['edad'])) {
+                    if ((int) $_REQUEST['edad'] < 0 || (int) $_REQUEST['edad'] > 120) {
+                        $aErrores[] = "La edad no es válida (0-120).";
+                    }
+                } else if (isset($_REQUEST['submit']) && empty($_REQUEST['edad'])) {
+                    $aErrores[] = "Debes indicar una edad.";
                 }
 
-                // comprobación de la pregunta de seguridad
-                if ($pregunta === '' || $pregunta !== 'Lola') {
-                    $aErrores[] = "<br>La pregunta de seguridad es incorrecta o está vacía.";
+                // Pregunta de seguridad
+                $valoresValidos = ["Lola"]; // valores válidos posibles
+                if (!empty($_REQUEST['pregunta'])) {
+                    if (!in_array($_REQUEST['pregunta'], $valoresValidos)) {
+                        $aErrores[] = "La respuesta de seguridad es incorrecta.";
+                    }
+                } else if (isset($_REQUEST['submit']) && empty($_REQUEST['pregunta'])) {
+                    $aErrores[] = "La pregunta de seguridad no puede estar vacía.";
                 }
 
+                
                 // Si no hay errores, se muestran los resultados
                 if (empty($aErrores)) {
-                    echo "<h3>Respuestas recibidas:</h3>";
+                    echo "<br><h3>Respuestas recibidas:</h3><br>";
                     echo"Nombre completo: {$nombre}<br>";
                     echo"Edad: {$edad}<br>";
                     echo "Carnet de conducir: " . ($carnet ? "Sí" : "No") . "<br>";
                     echo "Nombre de tu mascota: " . $pregunta;
                 }
-            }else{
-            ?>
-            
-            <section>
-                <h2>Rellena el formulario.</h2>
-                <form action="" method="post">
-                    <label for="tipoFormulario">Tipo del formulario</label><br>
-                    <input name="tipoFormulario" id="tipoFormulario" type="text" value="Formulario de Seguridad" readonly><br>
-                    
-                    <label for="nombre">Nombre completo:</label><br>
-                    <input name="nombre" id="nombre" type="text" value="<?php echo (isset($_REQUEST['nombre']) ? $_REQUEST['nombre'] : ''); ?>" ><br>
+            } 
+            if (!isset($_REQUEST['submit']) || !empty($aErrores)) {
+                ?>
+
+                <section>
+                    <h2>Rellena el formulario.</h2>
+                    <form action="" method="post">
+                        <label for="tipoFormulario">Tipo del formulario</label><br>
+                        <input name="tipoFormulario" id="tipoFormulario" type="text" value="Formulario de Seguridad" readonly><br>
+
+                        <label for="nombre">Nombre completo:</label><br>
+                        <input name="nombre" id="nombre" type="text" value="<?php echo (isset($_REQUEST['nombre']) ? $_REQUEST['nombre'] : ''); ?>" ><br>
 
 
-                    <label for="edad">Edad:</label><br>
-                    <input name="edad" id="edad" type="number" value="<?php echo (isset($_REQUEST['edad']) ? $_REQUEST['edad'] : ''); ?>"><br><br>
+                        <label for="edad">Edad: (La edad no es obligatoria)</label><br>
+                        <input name="edad" id="edad" type="number" value="<?php echo (isset($_REQUEST['edad']) ? $_REQUEST['edad'] : ''); ?>"><br><br>
 
 
-                    <label id="preg">Pregunta de seguridad:</label>
-                    <label for="pregunta" class="pregunta">Cual es el nombre de tu mascota? </label><br>
-                    <input name="pregunta" id="pregunta" type="text" value="<?php echo (isset($_REQUEST['pregunta']) ? $_REQUEST['pregunta'] : ''); ?>"><br><br>
+                        <label id="preg">Pregunta de seguridad:</label>
+                        <label for="pregunta" class="pregunta">Cual es el nombre de tu mascota? </label><br>
+                        <input name="pregunta" id="pregunta" type="text" value="<?php echo (isset($_REQUEST['pregunta']) ? $_REQUEST['pregunta'] : ''); ?>"><br><br>
 
 
-                    <label for="carnet">Marca si tienes carnet de conducir:</label>
-                    <input type="checkbox" name="boolean" id="carnet"><br>
+                        <label for="carnet">Marca si tienes carnet de conducir:</label>
+                        <input type="checkbox" name="boolean" id="carnet"><br>
 
-                    <button type="submit" name="submit">Enviar</button>
-                </form>  
-            </section>
-            <?php
+                        <button type="submit" name="submit">Enviar</button>
+                    </form>  
+                </section>
+                <?php
             }
-            
+
             // Mostrar errores si hay
             if (!empty($aErrores)) {
-                echo'<br><h3>Respuestas del formulario :</h3><br>';
+                echo'<br><h3>Mensaje de error :</h3><br>';
                 echo "<div style='color:red;'><ul>";
                 foreach ($aErrores as $error) {
                     echo "<li>" . $error . "</li>";

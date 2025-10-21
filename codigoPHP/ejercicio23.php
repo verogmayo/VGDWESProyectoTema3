@@ -82,12 +82,11 @@
              * @date 2025-10-18 
              * 
              *
-             * Ejercicio 24
+             * Ejercicio 23
              * * Construir un formulario para recoger un cuestionario realizado a una persona y 
-             * mostrar en la misma página las preguntas y las respuestas recogidas; en el caso de que 
-             * alguna respuesta esté vacía o errónea volverá a salir el formulario con el mensaje correspondiente, 
-             * pero las respuestas que habíamos tecleado correctamente aparecerán en el formulario 
-             * y no tendremos que volver a teclearlas.
+             * mostrar en la misma página las preguntas y las respuestas recogidas; en el caso de 
+             * que alguna respuesta esté vacía o errónea volverá a salir el formulario con 
+             * el mensaje correspondiente.
              */
             /** @var array $aErrores Array para almacenar mensajes de error de validación. */
             $aErrores = [];
@@ -106,22 +105,31 @@
                 $pregunta = $_REQUEST['pregunta'] ?? '';
                 $carnet = isset($_REQUEST['boolean']);
 
-                // Validaciones
-                if ($nombre === '') {
+                //Validaciones -----------------------
+                // Nombre no vacío
+                if (isset($_REQUEST['submit']) && empty($_REQUEST['nombre'])) {
                     $aErrores[] = "El nombre no puede estar vacío.";
                 }
 
-                if ($edad === '') {
-                    $aErrores[] = "La edad no puede estar vacía.";
-                } elseif ((int) $edad < 0 || (int) $edad > 120) {
-                    $aErrores[] = "La edad no es válida (0-120).";
+                // Edad entre 0 y 120
+                if (!empty($_REQUEST['edad'])) {
+                    if ((int) $_REQUEST['edad'] < 0 || (int) $_REQUEST['edad'] > 120) {
+                        $aErrores[] = "La edad no es válida (0-120).";
+                    }
+                } else if (isset($_REQUEST['submit']) && empty($_REQUEST['edad'])) {
+                    $aErrores[] = "Debes indicar una edad.";
                 }
 
-                // comprobación de la pregunta de seguridad
-                if ($pregunta === '' || $pregunta !== 'Lola') {
-                    $aErrores[] = "La pregunta de seguridad es incorrecta o está vacía.";
+                // Pregunta de seguridad
+                $valoresValidos = ["Lola"]; // valores válidos posibles
+                if (!empty($_REQUEST['pregunta'])) {
+                    if (!in_array($_REQUEST['pregunta'], $valoresValidos)) {
+                        $aErrores[] = "La respuesta de seguridad es incorrecta.";
+                    }
+                } else if (isset($_REQUEST['submit']) && empty($_REQUEST['pregunta'])) {
+                    $aErrores[] = "La pregunta de seguridad no puede estar vacía.";
                 }
-
+                
                 // Si no hay errores, se muestran los resultados
                 if (empty($aErrores)) {
                     echo "<h3>Respuestas recibidas:</h3>";
@@ -130,7 +138,8 @@
                     echo "Carnet de conducir: " . ($carnet ? "Sí" : "No") . "<br>";
                     echo "Nombre de tu mascota: " . $pregunta;
                 }
-            }else{
+            }
+                if (!isset($_REQUEST['submit']) || !empty($aErrores)) {
                  ?>
                 <section>
                 <h2>Rellena el formulario.</h2>
