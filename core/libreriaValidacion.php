@@ -52,7 +52,7 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
      * @return null|string Devuelve null si es correcto o un mensaje de error en caso de que lo haya.
      */
 
-    public static function comprobarAlfabetico($cadena, $maxTamanio = 1000, $minTamanio = 1, $obligatorio = 0) {  //AÑADIDOS VALORES POR DEFECTO Y MEJORADA LA RESPUESTA
+    public static function comprobarAlfabetico($cadena, $maxTamanio, $minTamanio, $obligatorio) {  //AÑADIDOS VALORES POR DEFECTO Y MEJORADA LA RESPUESTA
         // Patrón para campos de solo texto
         $patron_texto = "/^[a-zA-ZáéíóúÁÉÍÓÚäëïöüÄËÏÖÜàèìòùÀÈÌÒÙñÑ\s]+$/";
         $cadena = htmlspecialchars(strip_tags(trim((string) $cadena)));
@@ -91,7 +91,7 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
      * @param boolean $obligatorio Valor booleano indicado mediante 1, si es obligatorio o 0 si no lo es.
      * @return null|string Devuelve null si es correcto o un mensaje de error en caso de que lo haya.
      */
-    public static function comprobarAlfaNumerico($cadena, $maxTamanio = 1000, $minTamanio = 1, $obligatorio = 0) {  //AÑADIDOS VALORES POR DEFECTO Y MEJORADA LA RESPUESTA
+    public static function comprobarAlfaNumerico($cadena, $maxTamanio , $minTamanio, $obligatorio) {  //AÑADIDOS VALORES POR DEFECTO Y MEJORADA LA RESPUESTA
         $cadena = htmlspecialchars(strip_tags(trim((string) $cadena)));
         $mensajeError = null;
         //Si es obligatorio se hace la comprobación de que no está vacío
@@ -121,15 +121,17 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
      * @param $obligatorio Valor booleano indicado mediante 1, si es obligatorio o 0 si no lo es.
      * @return null|string Devuelve null en el caso en el que esté correcto, si no devuelve una cadena con el mensaje de error.
      */
-    public static function comprobarEntero($integer, $max = PHP_INT_MAX, $min = -PHP_INT_MAX, $obligatorio = 0) {  //AÑADIDOS VALORES POR DEFECTO Y AHORA DETECTA EL 0
+    public static function comprobarEntero($integer, $max = PHP_INT_MAX, $min = -PHP_INT_MAX, $obligatorio) {  //AÑADIDOS VALORES POR DEFECTO Y AHORA DETECTA EL 0
         $mensajeError = null;
 
         if ($obligatorio == 1 && $integer != '0') {
             $mensajeError = self::comprobarNoVacio($integer);
         }
+     
 
         if (($obligatorio == 0 && $integer != null) || ($obligatorio == 1 && empty($mensajeError))) {//COMPROBAMOS QUE SI ES OPCIONAL, NO ESTÉ VACÍO Y SI ES OBLIGATORIO QUE NO HAYA GUARDADO UN MENSAJE DE ERROR ANTERIOR (QUE EL CAMPO NO ESTÉ VACÍO)  
             $integer = str_replace('.', ',', $integer); //SI SE HA INTRODUCIDO UN NÚMERO CON '.'(FLOAT), SUSTITUIMOS EL PUNTO POR UNA COMA PARA QUE SEA UN STRING
+            
             if (!is_numeric($integer)) { //SI NO ES UN NÚMERO O STRING NUMÉRICO
                 $mensajeError = "El campo no es un entero. ";
             } else {
@@ -140,8 +142,8 @@ class validacionFormularios {  //ELIMINA EL METODO VALIDATEDATE Y LO INCLUYE EN 
                     $mensajeError = $mensajeError . "El número no puede ser menor que " . $min . ".";
                 }
             }
+        
         }
-
         return $mensajeError;
     }
 

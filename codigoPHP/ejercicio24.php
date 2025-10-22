@@ -88,100 +88,107 @@
              * pero las respuestas que habíamos tecleado correctamente aparecerán en el formulario 
              * y no tendremos que volver a teclearlas.
              */
+             //enlace para importar las librerías de validación de campos
+            require_once '../core/libreriaValidacion.php';
+            require_once '../core/miLibreriaStatic.php';
+
+            //inicialización de variables
             /** @var array $aErrores Array para almacenar mensajes de error de validación. */
-            $aErrores = [];
-            /** @var string $nombre Nombre completo introducido por el usuario. */
-            $nombre = '';
-            /** @var string $edad Edad introducida por el usuario (como string, se convierte a int para validación). */
-            $edad = '';
-            /** @var string $pregunta Respuesta a la pregunta de seguridad. */
-            $pregunta = '';
-            /** @var boolean $carnet Indica si el usuario tiene carnet de conducir (checkbox marcado o no). */
-            $carnet = false;
+            $aErrores = [
+                'nombre' => null,
+                'edad' => null,
+                'preguntaSeguridad' => null,
+            ];
+            /** @var array $aRespuestas Array para almacenar las repuestas. */
+            $aRespuestas = [
+                'nombre' => null,
+                'edad' => null,
+                'preguntaSeguridad' => null,
+            ];
 
-            if (isset($_REQUEST['submit'])) {
+            /** @boollean boolean $entradaOK Indica si los datos de entrada son correctos o no. */
+            $entradaOK = true;
 
-                $nombre = $_REQUEST['nombre'] ?? ''; //guarda el valor del campo, y sino gurada vacio
-                $edad = $_REQUEST['edad'] ?? '';
-                $pregunta = $_REQUEST['pregunta'] ?? '';
-                $carnet = isset($_REQUEST['boolean']);
-
-                //Validaciones -----------------------
-                // Nombre no vacío
-                if (isset($_REQUEST['submit']) && empty($_REQUEST['nombre'])) {
-                    $aErrores[] = "El nombre no puede estar vacío.";
-                }
-
-                // Edad entre 0 y 120
-                if (!empty($_REQUEST['edad'])) {
-                    if ((int) $_REQUEST['edad'] < 0 || (int) $_REQUEST['edad'] > 120) {
-                        $aErrores[] = "La edad no es válida (0-120).";
-                    }
-                } else if (isset($_REQUEST['submit']) && empty($_REQUEST['edad'])) {
-                    $aErrores[] = "Debes indicar una edad.";
-                }
-
+            //Para cada campo del formulario se valida la entrada y se actua en consecuencia
+            if (isset($_REQUEST['submit'])) {//se cumple si el boton es submit
+                //Validación de los datos de los campos del formulario
+                $aErrores['nombre'] = validacionFormularios::comprobarAlfabetico($_REQUEST['nombre'], 80, 10, 1);
+                $aErrores['edad'] = validacionFormularios::comprobarEntero($_REQUEST['edad'], 120, 0, 0);
                 // Pregunta de seguridad
-                $valoresValidos = ["Lola"]; // valores válidos posibles
-                if (!empty($_REQUEST['pregunta'])) {
-                    if (!in_array($_REQUEST['pregunta'], $valoresValidos)) {
-                        $aErrores[] = "La respuesta de seguridad es incorrecta.";
+                $valoresValidos = ["Lola", "lola"]; // posibles valores válidos 
+                $aErrores['preguntaSeguridad'] = miLibreriaStatic::comprobarPreguntaSeguridad($_REQUEST['preguntaSeguridad'], $valoresValidos, 1);
+
+                //recorre el array de errores para detectar si hay alguno
+                foreach ($aErrores as $campo => $valorCampo) {
+                    if ($valorCampo != null) {//Si encuentra algún error 
+                        $entradaOK = false; // la entrada no es correcta
                     }
-                } else if (isset($_REQUEST['submit']) && empty($_REQUEST['pregunta'])) {
-                    $aErrores[] = "La pregunta de seguridad no puede estar vacía.";
                 }
+            } else {
+                //Si no se ha aceptado el formulario
+                $entradaOK = false;
+            }
+            //Tratamiento del formulario
+            if ($entradaOK) {
+                //REllenamos el array de respuesta con los valores que ha introducido el usuario
+                $aRespuestas['nombre'] = $_REQUEST['nombre'];
+                $aRespuestas['edad'] = $_REQUEST['edad'];
+                $aRespuestas['preguntaSeguridad'] = $_REQUEST['preguntaSeguridad'];
 
-                
-                // Si no hay errores, se muestran los resultados
-                if (empty($aErrores)) {
-                    echo "<br><h3>Respuestas recibidas:</h3><br>";
-                    echo"Nombre completo: {$nombre}<br>";
-                    echo"Edad: {$edad}<br>";
-                    echo "Carnet de conducir: " . ($carnet ? "Sí" : "No") . "<br>";
-                    echo "Nombre de tu mascota: " . $pregunta;
+                //Se recorre el array de las respuestas y se muestran
+                print("<br><h3>Respuestas del usuario</h3><br>");
+                foreach ($aRespuestas as $campo => $valorCampo) {
+                    print("$campo del usuario : " . $valorCampo . '</br>');
                 }
-            } 
-            if (!isset($_REQUEST['submit']) || !empty($aErrores)) {
+            } else {
+                //si hay algún error se vuelve a mostrar el formulario
                 ?>
-
                 <section>
                     <h2>Rellena el formulario.</h2>
-                    <form action="" method="post">
+                    <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
                         <label for="tipoFormulario">Tipo del formulario</label><br>
                         <input name="tipoFormulario" id="tipoFormulario" type="text" value="Formulario de Seguridad" readonly><br>
 
+
                         <label for="nombre">Nombre completo:</label><br>
-                        <input name="nombre" id="nombre" type="text" value="<?php echo (isset($_REQUEST['nombre']) ? $_REQUEST['nombre'] : ''); ?>" ><br>
-
-
-                        <label for="edad">Edad: (La edad no es obligatoria)</label><br>
-                        <input name="edad" id="edad" type="number" value="<?php echo (isset($_REQUEST['edad']) ? $_REQUEST['edad'] : ''); ?>"><br><br>
-
-
-                        <label id="preg">Pregunta de seguridad:</label>
-                        <label for="pregunta" class="pregunta">Cual es el nombre de tu mascota? </label><br>
-                        <input name="pregunta" id="pregunta" type="text" value="<?php echo (isset($_REQUEST['pregunta']) ? $_REQUEST['pregunta'] : ''); ?>"><br><br>
-
+                        <?php
+                        if ($aErrores['nombre'] == null) {
+                            echo'<input  name="nombre" id="nombre" type="text" value="'. (isset($_REQUEST['nombre']) ? $_REQUEST['nombre'] : '') . '"><br>';
+                        } else {
+                            echo"<a style='color:red'>$aErrores[nombre]</a><br>";
+                            echo '<input name="nombre" id="nombre" type="text" ><br>';
+                        }
+                        ?>
+                        <label for="edad">Edad:</label><br>
+                        <?php
+                        if ($aErrores['edad'] == null) {
+                            echo'<input name="edad" id="edad" type="number" value="' . (isset($_REQUEST['edad']) ? $_REQUEST['edad'] : '') . '"><br><br>';
+                        } else {
+                            echo"<a style='color:red;'>$aErrores[edad]</a><br>";
+                            echo '<br><input name="edad" id="edad" type="number" ><br>';
+                        }
+                        ?>
+                        <label for="preguntaSeguridad" id="preg">Pregunta de seguridad:</label>
+                        <label for="preguntaSeguridad" class="preguntaSeguridad">Cual es el nombre de tu mascota? </label><br>
+                        <?php
+                        if ($aErrores['preguntaSeguridad'] == null) {
+                            echo'<input name="preguntaSeguridad" id="preguntaSeguridad" type="text" value="' . (isset($_REQUEST['preguntaSeguridad']) ? $_REQUEST['preguntaSeguridad'] : '') . '"><br><br>';
+                        } else {
+                            echo"<a style='color:red;'>$aErrores[preguntaSeguridad]</a><br>";
+                            echo'<input name="preguntaSeguridad" id="preguntaSeguridad" type="text" ><br>';
+                        }
+                        ?>
 
                         <label for="carnet">Marca si tienes carnet de conducir:</label>
                         <input type="checkbox" name="boolean" id="carnet"><br>
 
                         <button type="submit" name="submit">Enviar</button>
-                    </form>  
-                </section>
-                <?php
-            }
 
-            // Mostrar errores si hay
-            if (!empty($aErrores)) {
-                echo'<br><h3>Mensaje de error :</h3><br>';
-                echo "<div style='color:red;'><ul>";
-                foreach ($aErrores as $error) {
-                    echo "<li>" . $error . "</li>";
+                    </form>  
+                <?php
                 }
-                echo "</ul></div>";
-            }
-            ?>
+                ?>
+ 
         </main>
         <footer class="footer">
             <div class="footerContent">

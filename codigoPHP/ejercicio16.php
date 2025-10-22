@@ -82,6 +82,10 @@
             $resultadoTotalFN = array_sum($asalarioXDia);
             echo '<br><br><h3>Calculo de la suma, utilizando array_sum :</h3>';
             echo '<h3>El total del salario semanal es: ' . $resultadoTotalFN . " horas</h3><br>";
+            
+            
+            echo 'Recorrido del Array con funciones'
+           
                 ?>
             </section>
 
