@@ -110,16 +110,18 @@
             $entradaOK = true;
 
             //Para cada campo del formulario se valida la entrada y se actua en consecuencia
-            if (isset($_REQUEST['submit'])) {//se cumple si el boton es submit
+            if (isset($_REQUEST['enviar'])) {//se cumple si el boton es submit
                 //Validación de los datos de los campos del formulario
                 $aErrores['nombre'] = validacionFormularios::comprobarAlfabetico($_REQUEST['nombre'], 80, 10, 1);
                 $aErrores['edad'] = validacionFormularios::comprobarEntero($_REQUEST['edad'], 120, 0, 0);
                 // Pregunta de seguridad
                 $valoresValidos = ["Lola", "lola"]; // posibles valores válidos 
                 $aErrores['preguntaSeguridad'] = miLibreriaStatic::comprobarPreguntaSeguridad($_REQUEST['preguntaSeguridad'], $valoresValidos, 1);
-
-                //recorre el array de errores para detectar si hay alguno
+                
+                //CAMBIAR ESTO AL  
+                //recorre el array de errores para detectar si hay alguno 
                 foreach ($aErrores as $campo => $valorCampo) {
+                    //CAMBIAR ESTO A UN IF IS NULL
                     if ($valorCampo != null) {//Si encuentra algún error 
                         $entradaOK = false; // la entrada no es correcta
                     }
@@ -152,6 +154,7 @@
 
                         <label for="nombre">Nombre completo:</label><br>
                         <?php
+                        //CAMBIAR A IF IS NULL
                         if ($aErrores['nombre'] == null) {
                             echo'<input  name="nombre" id="nombre" type="text" value="'. (isset($_REQUEST['nombre']) ? $_REQUEST['nombre'] : '') . '"><br>';
                         } else {
@@ -182,7 +185,7 @@
                         <label for="carnet">Marca si tienes carnet de conducir:</label>
                         <input type="checkbox" name="boolean" id="carnet"><br>
 
-                        <button type="submit" name="submit">Enviar</button>
+                        <button type="submit" name="enviar">Enviar</button>
 
                     </form>  
                 <?php
