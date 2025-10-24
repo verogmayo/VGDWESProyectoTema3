@@ -96,15 +96,15 @@
             //inicialización de variables
             /** @var array $aErrores Array para almacenar mensajes de error de validación. */
             $aErrores = [
-                'nombre' => null,
-                'edad' => null,
-                'preguntaSeguridad' => null,
+                'nombre' => '',
+                'edad' => '',
+                'preguntaSeguridad' => '',
             ];
             /** @var array $aRespuestas Array para almacenar las repuestas. */
             $aRespuestas = [
-                'nombre' => null,
-                'edad' => null,
-                'preguntaSeguridad' => null,
+                'nombre' => '',
+                'edad' => '',
+                'preguntaSeguridad' => '',
             ];
 
             /** @boollean boolean $entradaOK Indica si los datos de entrada son correctos o no. */
@@ -119,14 +119,11 @@
                 $valoresValidos = ["Lola", "lola"]; // posibles valores válidos 
                 $aErrores['preguntaSeguridad'] = miLibreriaStatic::comprobarPreguntaSeguridad($_REQUEST['preguntaSeguridad'], $valoresValidos, 1);
 
-                //recorre el array de errores para detectar si hay alguno 
+                //recorre el array de errores para detectar si hay alguno
                 foreach ($aErrores as $campo => $valorCampo) {
-                    if (!is_null($valorCampo)) {
-                        $entradaOK = false;
+                    if ($valorCampo != null) {//Si encuentra algún error 
+                        $entradaOK = false; // la entrada no es correcta
                     }
-                    /*if ($valorCampo != null) {//Si encuentra algún error 
-                      $entradaOK = false; // la entrada no es correcta
-                      } */
                 }
             } else {
                 //Si no se ha aceptado el formulario
@@ -142,7 +139,112 @@
                 //Se recorre el array de las respuestas y se muestran
                 print("<br><h3>Respuestas del usuario</h3><br>");
                 foreach ($aRespuestas as $campo => $valorCampo) {
-                    print("$campo del usuario : " . $valorCampo . '<br>');
+                    print("$campo del usuario : " . $valorCampo . '</br>');
+                }
+            } else {
+                //si hay algún error se vuelve a mostrar el formulario
+                ?>
+                <section>
+                    <h2>Rellena el formulario.</h2>
+                    <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
+                        <label for="tipoFormulario">Tipo del formulario</label><br>
+                        <input name="tipoFormulario" id="tipoFormulario" type="text" value="Formulario de Seguridad" readonly><br>
+
+
+                        <label for="nombre">Nombre completo:</label>
+                        <a style='color:red'><?php echo $aErrores['nombre']?></a><br>
+                        <input  name="nombre" id="nombre" type="text" value='<?php echo(is_null($aErrores['nombre'])) ? ($_REQUEST['nombre'] ?? ''):''; ?> '><br>
+                                            
+                        <label for="edad">Edad:</label><br>
+                         <a style='color:red'><?php echo $aErrores['edad']?></a><br>
+                        <input name="edad" id="edad" type="number" value=' <?php echo(is_null($aErrores['edad'])) ? ($_REQUEST['edad'] ?? ''):''; ?> '><br>
+                        
+                        <label for="preguntaSeguridad" id="preg">Pregunta de seguridad:</label>
+                        <label for="preguntaSeguridad" class="preguntaSeguridad">Cual es el nombre de tu mascota? </label><br>
+                         <a style='color:red'><?php echo $aErrores['preguntaSeguridad']?></a><br>
+                        <input name="preguntaSeguridad" id="preguntaSeguridad" type="number" value=' <?php echo(is_null($aErrores['preguntaSeguridad'])) ? ($_REQUEST['preguntaSeguridad'] ?? ''):''; ?> '><br>
+
+                        <label for="carnet">Marca si tienes carnet de conducir:</label>
+                        <input type="checkbox" name="boolean" id="carnet"><br>
+
+                        <button type="submit" name="enviar">Enviar</button>
+
+                    </form>  
+                    <?php
+                }
+                ?>
+
+        </main>
+
+
+<!--
+        <main>
+
+            <?php
+            /**
+             * @author Véronique Grué
+             * @version 1.0
+             * @date 2025-10-18 
+             * 
+             *
+             * Ejercicio 24
+             * * Construir un formulario para recoger un cuestionario realizado a una persona y 
+             * mostrar en la misma página las preguntas y las respuestas recogidas; en el caso de que 
+             * alguna respuesta esté vacía o errónea volverá a salir el formulario con el mensaje correspondiente, 
+             * pero las respuestas que habíamos tecleado correctamente aparecerán en el formulario 
+             * y no tendremos que volver a teclearlas.
+             */
+            //enlace para importar las librerías de validación de campos
+            require_once '../core/libreriaValidacion.php';
+            require_once '../core/miLibreriaStatic.php';
+
+            //inicialización de variables
+            /** @var array $aErrores Array para almacenar mensajes de error de validación. */
+            $aErrores = [
+                'nombre' => null,
+                'edad' => null,
+                'preguntaSeguridad' => null,
+            ];
+            /** @var array $aRespuestas Array para almacenar las repuestas. */
+            $aRespuestas = [
+                'nombre' => null,
+                'edad' => null,
+                'preguntaSeguridad' => null,
+            ];
+
+            /** @boollean boolean $entradaOK Indica si los datos de entrada son correctos o no. */
+            $entradaOK = true;
+
+            //Para cada campo del formulario se valida la entrada y se actua en consecuencia
+            if (isset($_REQUEST['submit'])) {//se cumple si el boton es submit
+                //Validación de los datos de los campos del formulario
+                $aErrores['nombre'] = validacionFormularios::comprobarAlfabetico($_REQUEST['nombre'], 80, 10, 1);
+                $aErrores['edad'] = validacionFormularios::comprobarEntero($_REQUEST['edad'], 120, 0, 0);
+                // Pregunta de seguridad
+                $valoresValidos = ["Lola", "lola"]; // posibles valores válidos 
+                $aErrores['preguntaSeguridad'] = miLibreriaStatic::comprobarPreguntaSeguridad($_REQUEST['preguntaSeguridad'], $valoresValidos, 1);
+
+                //recorre el array de errores para detectar si hay alguno
+                foreach ($aErrores as $campo => $valorCampo) {
+                    if ($valorCampo != null) {//Si encuentra algún error 
+                        $entradaOK = false; // la entrada no es correcta
+                    }
+                }
+            } else {
+                //Si no se ha aceptado el formulario
+                $entradaOK = false;
+            }
+            //Tratamiento del formulario
+            if ($entradaOK) {
+                //REllenamos el array de respuesta con los valores que ha introducido el usuario
+                $aRespuestas['nombre'] = $_REQUEST['nombre'];
+                $aRespuestas['edad'] = $_REQUEST['edad'];
+                $aRespuestas['preguntaSeguridad'] = $_REQUEST['preguntaSeguridad'];
+
+                //Se recorre el array de las respuestas y se muestran
+                print("<br><h3>Respuestas del usuario</h3><br>");
+                foreach ($aRespuestas as $campo => $valorCampo) {
+                    print("$campo del usuario : " . $valorCampo . '</br>');
                 }
             } else {
                 //si hay algún error se vuelve a mostrar el formulario
@@ -156,47 +258,173 @@
 
                         <label for="nombre">Nombre completo:</label><br>
                         <?php
-//                        echo is_null($aErrores['nombre'])
-//                            ? '<input name="nombre" id="nombre" type="text" value="' . (isset($_REQUEST['nombre']) ? $_REQUEST['nombre'] : '') . '"><br>'
-//                            : '<input name="nombre" id="nombre" type="text" value="' . (isset($_REQUEST['nombre']) ? $_REQUEST['nombre'] : '') . '"><a style="color:red;">' . $aErrores['nombre'] . '</a><br>';
-                         if (is_null($aErrores['nombre'])) {
-                            echo'<input  name="nombre" id="nombre" type="text" value="'. (isset($_REQUEST['nombre']) ? $_REQUEST['nombre'] : '') . '"><br>';
+                        if ($aErrores['nombre'] == null) {
+                            echo'<input  name="nombre" id="nombre" type="text" value="' . (isset($_REQUEST['nombre']) ? $_REQUEST['nombre'] : '') . '"><br>';
                         } else {
                             echo"<a style='color:red'>$aErrores[nombre]</a><br>";
-                            echo '<input name="nombre" id="nombre" type="text" value="'. (isset($_REQUEST['nombre']) ? $_REQUEST['nombre'] : '') . '"><br>';
+                            echo '<input name="nombre" id="nombre" type="text" ><br>';
                         }
                         ?>
                         <label for="edad">Edad:</label><br>
                         <?php
-                        if (is_null($aErrores['edad'])) {
+                        if ($aErrores['edad'] == null) {
                             echo'<input name="edad" id="edad" type="number" value="' . (isset($_REQUEST['edad']) ? $_REQUEST['edad'] : '') . '"><br><br>';
                         } else {
                             echo"<a style='color:red;'>$aErrores[edad]</a><br>";
-                            echo '<br><input name="edad" id="edad" type="number" value="' . (isset($_REQUEST['edad']) ? $_REQUEST['edad'] : '') . '"><br>';
+                            echo '<br><input name="edad" id="edad" type="number" ><br>';
                         }
                         ?>
                         <label for="preguntaSeguridad" id="preg">Pregunta de seguridad:</label>
                         <label for="preguntaSeguridad" class="preguntaSeguridad">Cual es el nombre de tu mascota? </label><br>
                         <?php
-                        if (is_null($aErrores['preguntaSeguridad'])) {
+                        if ($aErrores['preguntaSeguridad'] == null) {
                             echo'<input name="preguntaSeguridad" id="preguntaSeguridad" type="text" value="' . (isset($_REQUEST['preguntaSeguridad']) ? $_REQUEST['preguntaSeguridad'] : '') . '"><br><br>';
                         } else {
                             echo"<a style='color:red;'>$aErrores[preguntaSeguridad]</a><br>";
-                            echo'<input name="preguntaSeguridad" id="preguntaSeguridad" type="text" value="' . (isset($_REQUEST['preguntaSeguridad']) ? $_REQUEST['preguntaSeguridad'] : '') . '" ><br>';
+                            echo'<input name="preguntaSeguridad" id="preguntaSeguridad" type="text" ><br>';
                         }
                         ?>
 
                         <label for="carnet">Marca si tienes carnet de conducir:</label>
                         <input type="checkbox" name="boolean" id="carnet"><br>
 
-                        <button type="submit" name="enviar">Enviar</button>
+                        <button type="submit" name="submit">Enviar</button>
 
                     </form>  
-    <?php
-}
-?>
+                    <?php
+                }
+                ?>
 
-        </main>
+        </main>-->
+
+
+
+
+
+<!--               <main>
+        
+        <?php
+        /**
+         * @author Véronique Grué
+         * @version 1.0
+         * @date 2025-10-18 
+         * 
+         *
+         * Ejercicio 24
+         * * Construir un formulario para recoger un cuestionario realizado a una persona y 
+         * mostrar en la misma página las preguntas y las respuestas recogidas; en el caso de que 
+         * alguna respuesta esté vacía o errónea volverá a salir el formulario con el mensaje correspondiente, 
+         * pero las respuestas que habíamos tecleado correctamente aparecerán en el formulario 
+         * y no tendremos que volver a teclearlas.
+         */
+        //enlace para importar las librerías de validación de campos
+        require_once '../core/libreriaValidacion.php';
+        require_once '../core/miLibreriaStatic.php';
+
+        //inicialización de variables
+        /** @var array $aErrores Array para almacenar mensajes de error de validación. */
+        $aErrores = [
+            'nombre' => null,
+            'edad' => null,
+            'preguntaSeguridad' => null,
+        ];
+        /** @var array $aRespuestas Array para almacenar las repuestas. */
+        $aRespuestas = [
+            'nombre' => null,
+            'edad' => null,
+            'preguntaSeguridad' => null,
+        ];
+
+        /** @boollean boolean $entradaOK Indica si los datos de entrada son correctos o no. */
+        $entradaOK = true;
+
+        //Para cada campo del formulario se valida la entrada y se actua en consecuencia
+        if (isset($_REQUEST['enviar'])) {//se cumple si el boton es submit
+            //Validación de los datos de los campos del formulario
+            $aErrores['nombre'] = validacionFormularios::comprobarAlfabetico($_REQUEST['nombre'], 80, 10, 1);
+            $aErrores['edad'] = validacionFormularios::comprobarEntero($_REQUEST['edad'], 120, 0, 0);
+            // Pregunta de seguridad
+            $valoresValidos = ["Lola", "lola"]; // posibles valores válidos 
+            $aErrores['preguntaSeguridad'] = miLibreriaStatic::comprobarPreguntaSeguridad($_REQUEST['preguntaSeguridad'], $valoresValidos, 1);
+
+            //recorre el array de errores para detectar si hay alguno 
+            foreach ($aErrores as $campo => $valorCampo) {
+                if (!is_null($valorCampo)) {
+                    $entradaOK = false;
+                }
+                /* if ($valorCampo != null) {//Si encuentra algún error 
+                  $entradaOK = false; // la entrada no es correcta
+                  } */
+            }
+        } else {
+            //Si no se ha aceptado el formulario
+            $entradaOK = false;
+        }
+        //Tratamiento del formulario
+        if ($entradaOK) {
+            //REllenamos el array de respuesta con los valores que ha introducido el usuario
+            $aRespuestas['nombre'] = $_REQUEST['nombre'];
+            $aRespuestas['edad'] = $_REQUEST['edad'];
+            $aRespuestas['preguntaSeguridad'] = $_REQUEST['preguntaSeguridad'];
+
+            //Se recorre el array de las respuestas y se muestran
+            print("<br><h3>Respuestas del usuario</h3><br>");
+            foreach ($aRespuestas as $campo => $valorCampo) {
+                print("$campo del usuario : " . $valorCampo . '<br>');
+            }
+        } else {
+            //si hay algún error se vuelve a mostrar el formulario
+            ?>
+                            <section>
+                                <h2>Rellena el formulario.</h2>
+                                <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
+                                    <label for="tipoFormulario">Tipo del formulario</label><br>
+                                    <input name="tipoFormulario" id="tipoFormulario" type="text" value="Formulario de Seguridad" readonly><br>
+            
+            
+                                    <label for="nombre">Nombre completo:</label><br>
+            <?php
+//                        echo is_null($aErrores['nombre'])
+//                            ? '<input name="nombre" id="nombre" type="text" value="' . (isset($_REQUEST['nombre']) ? $_REQUEST['nombre'] : '') . '"><br>'
+//                            : '<input name="nombre" id="nombre" type="text" value="' . (isset($_REQUEST['nombre']) ? $_REQUEST['nombre'] : '') . '"><a style="color:red;">' . $aErrores['nombre'] . '</a><br>';
+            if (is_null($aErrores['nombre'])) {
+                echo'<input  name="nombre" id="nombre" type="text" value="' . (isset($_REQUEST['nombre']) ? $_REQUEST['nombre'] : '') . '"><br>';
+            } else {
+                echo"<a style='color:red'>$aErrores[nombre]</a><br>";
+                echo '<input name="nombre" id="nombre" type="text" value="' . (isset($_REQUEST['nombre']) ? $_REQUEST['nombre'] : '') . '"><br>';
+            }
+            ?>
+                                    <label for="edad">Edad:</label><br>
+            <?php
+            if (is_null($aErrores['edad'])) {
+                echo'<input name="edad" id="edad" type="number" value="' . (isset($_REQUEST['edad']) ? $_REQUEST['edad'] : '') . '"><br><br>';
+            } else {
+                echo"<a style='color:red;'>$aErrores[edad]</a><br>";
+                echo '<br><input name="edad" id="edad" type="number" value="' . (isset($_REQUEST['edad']) ? $_REQUEST['edad'] : '') . '"><br>';
+            }
+            ?>
+                                    <label for="preguntaSeguridad" id="preg">Pregunta de seguridad:</label>
+                                    <label for="preguntaSeguridad" class="preguntaSeguridad">Cual es el nombre de tu mascota? </label><br>
+            <?php
+            if (is_null($aErrores['preguntaSeguridad'])) {
+                echo'<input name="preguntaSeguridad" id="preguntaSeguridad" type="text" value="' . (isset($_REQUEST['preguntaSeguridad']) ? $_REQUEST['preguntaSeguridad'] : '') . '"><br><br>';
+            } else {
+                echo"<a style='color:red;'>$aErrores[preguntaSeguridad]</a><br>";
+                echo'<input name="preguntaSeguridad" id="preguntaSeguridad" type="text" value="' . (isset($_REQUEST['preguntaSeguridad']) ? $_REQUEST['preguntaSeguridad'] : '') . '" ><br>';
+            }
+            ?>
+            
+                                    <label for="carnet">Marca si tienes carnet de conducir:</label>
+                                    <input type="checkbox" name="boolean" id="carnet"><br>
+            
+                                    <button type="submit" name="enviar">Enviar</button>
+            
+                                </form>  
+            <?php
+        }
+        ?>
+        
+                </main>-->
         <footer class="footer">
             <div class="footerContent">
                 <div><p class="copyright">

@@ -88,15 +88,15 @@
                  * Ejercicio 18
                  * * Recorrer el array anterior utilizando funciones para obtener el mismo resultado.
                  */
-                /** @const int FILAS Numero de filas del teatro. */
-                define('FILAS', 20);
-                /** @const int ASIENTOXFILAS Numero de asientos por filas. */
-                define('ASIENTOXFILAS',15);
+                /** @const int NUMFILAS Numero de filas del teatro. */
+                define('NUMFILAS', 20);
+                /** @const int NUMASIENTOXFILAS Numero de asientos por filas. */
+                define('NUMASIENTOXFILAS',15);
 
                 //  Inicializar array vacio
-                for ($f = 0; $f < FILAS; $f++) {
+                for ($f = 0; $f < NUMFILAS; $f++) {
                     $aAsientosTeatro[$f] = [];
-                    for ($a = 0; $a < ASIENTOXFILAS; $a++) {
+                    for ($a = 0; $a < NUMASIENTOXFILAS; $a++) {
                         $aAsientosTeatro[$f][$a] = '';
                     }
                 }
@@ -119,11 +119,11 @@
                     echo "<div class='numAsiento'>Asiento {$asiento}</div>";
                 }
                 echo '</div>';
-                for ($f = 0; $f < FILAS; $f++) {
+                for ($f = 0; $f < NUMFILAS; $f++) {
                     echo '<div class="fila">'; // Inicio de la fila
                     $fl = $f + 1;
                     echo "<div class='nombreFila'>Fila {$fl}</div>";
-                    for ($a = 0; $a < ASIENTOXFILAS; $a++) {
+                    for ($a = 0; $a < NUMASIENTOXFILAS; $a++) {
                         $fila = $f + 1;
                         $asiento = $a + 1;
                         $nombre = $aAsientosTeatro[$f][$a];
