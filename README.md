@@ -1,8 +1,18 @@
-# 📚 Ejercicios Prácticos de PHP en el Aula
+#  Ejercicios Prácticos de PHP en el Aula
+---
+#### Ejercicios para practicar con fechas, tipos de datos,constantes, variables superglobales,arrays y formularios en PHP.
 
 ---
 
-## 💻 1. Conceptos Fundamentales e Información del Entorno
+## 1. Requerimientos técnicos
+ - Tener un servidor, o entorno local como XAMPP o WAMP para ejecutar los ejercicios.
+ - Tener PHP instalado en el sistema (En este caso php8.3).
+ - Navegador web para visualizar los resultados.
+ (Si no se tuviera el servidor y PHP instalados, podreis encontrar la infomración para la instalación en este enlace https://github.com/verogmayo/VGDAWProyectoDAW/blob/master/README.md)
+
+--- 
+
+## 2. Conceptos Fundamentales e Información del Entorno
 
 | ID | Descripción de la Práctica | Conceptos Clave |
 | :--- | :--- | :--- |
@@ -19,7 +29,7 @@
 
 ---
 
-## ⌚ 2. Manejo de Fechas y Tiempo
+## 3. Manejo de Fechas y Tiempo
 
 | ID | Descripción de la Práctica | Conceptos Clave |
 | :--- | :--- | :--- |
@@ -30,7 +40,7 @@
 
 ---
 
-## 🗂️ 3. Arrays
+## ️ 4. Arrays
 
 | ID | Descripción de la Práctica | Conceptos Clave |
 | :--- | :--- | :--- |
@@ -41,7 +51,7 @@
 
 ---
 
-## 📚 4. Estructura de Código y Librerías
+##  5. Estructura de Código y Librerías
 
 | ID | Descripción de la Práctica | Conceptos Clave |
 | :--- | :--- | :--- |
@@ -51,7 +61,7 @@
 
 ---
 
-## 📝 5. Desarrollo de Formularios
+##  6. Desarrollo de Formularios
 
 | ID | Descripción de la Práctica | Conceptos Clave |
 | :--- | :--- | :--- |
@@ -61,3 +71,7 @@
 | **24** | Formulario con **persistencia de datos**: Si hay errores, las respuestas correctas se **mantienen en el formulario** y no se pierden. | Atributo `value` condicional, `$_POST` persistente. |
 | **25** | Trabajar en **`PlantillaFormulario.php`** para crear una plantilla reutilizable de formularios. |  |
 | **26** | **Aplicación práctica**: Desarrollar un formulario que recoja temperatura y presión atmosférica y genere un **informe con promedios, mínimos y máximos**. |  |
+| **27** | **Aplicación práctica**: Desarrollar un formulario con una encuesta individual de valoración |  |
+
+
+
