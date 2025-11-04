@@ -8,16 +8,32 @@
     </head>
     <body>
         <header class="header">
+            <a href="../indexProyectoTema3.php">volver</a>
             <h1>Ejercicio 14</h1>
         </header>
         <main>
             <section>
                 <?php
-                require_once 'miLibreria.php'; //para inclir la libreria miLibreria.php
-                require_once 'miLibreriaStatic.php'; //para inclir la libreria miLibreriaStatic.php
-
+                /**
+                 * @author Véronique Grué
+                 * @version 1.0
+                 * @date 2025-10-19 
+                 * 
+                 *
+                 * Ejercicio 14
+                 * *Construir una librería de funciones de validación de campos de formularios (LibreríaValidacionFormularios.php) 
+                 * para utilizarla en los siguientes ejercicios. 
+                 * Discusión: diferencia entre librería de funciones y clase. 
+                 */
+                 
+                 
+                require_once '../core/miLibreriaStatic.php'; //para incluir la libreria miLibreriaStatic.php
+                require_once '../core/miLibreria.php'; //para incluir la libreria miLibreria.php
+                /** @var int $a numero aleatorio  del 0 al 100 */
                 $a = random_int(0, 100);
+                /** @var int $b numero aleatorio del 0 al 100 */ 
                 $b = random_int(0, 100);
+                
                 echo "<h3>Prueba con miLibreria (funciones normales)</h3>";
 
                 echo "Suma: " . sumar($a, $b) . "<br>";
@@ -33,7 +49,7 @@
                 - El código es pequeño o temporal (ejercicios, scripts, tests).
                 - Las funciones no dependen unas de otras ni comparten estado.
                 - No hay necesidad de “agruparlas” en una misma entidad. -->
-            
+
             <!-- Cuándo usar funciones estáticas
                 - Quieres organizar funciones relacionadas (misma temática o dominio).
                 - Estás haciendo un proyecto grande o modular, con varias librerías.
