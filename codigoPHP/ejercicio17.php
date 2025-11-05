@@ -6,9 +6,7 @@
         <title>Véro Grué - ProyectoTema3 Ejercicio 17</title>
         <link rel="stylesheet" href="../webroot/css/styleEjercicios.css">
         <style>
-            *{
-                box-sizing:border-box;
-            }
+            
             .planoAsientos {
                 display: flex;
                 flex-direction: column;
@@ -41,7 +39,7 @@
                 border-color: black;
             }
             .nombreFila{
-                width: 60px;
+                width: 70px;
                 height: 45px;
                 font-weight: 700;
                 line-height: 45px;
@@ -49,6 +47,23 @@
                 padding-left: 10px;
                 background-color: gray;
                 color:white;
+                margin: 2px
+            }
+             .cabeceraAsientos, .pieAsientos{
+                display: flex;
+                color: white;
+                text-align: center;
+            }
+            .numAsiento{
+                width: 45px;
+                height: 45px;
+                margin: 2px;
+                background-color: gray;
+                align-items: center;
+                padding-top:  5px;
+                font-size: 12px;
+                font-weight: bold;
+
             }
 
 
@@ -90,9 +105,140 @@
                 $aAsientosTeatro[6][15] = 'Laura';      // Fila 6, Asiento 15
                 $aAsientosTeatro[20][8] = 'Carlos';     // Fila 20, Asiento 8
                 $aAsientosTeatro[11][6] = 'Marta';      // Fila 11, Asiento 6
-                //Mapa del teatro con 2 for---------------
+                
 
-                echo "<h2>Mapa del Teatro (Asientos Libres y Ocupados)</h2>";
+                
+                
+                
+                //Mapa del teatro con foreach -------------------------------
+
+                echo "<h2>Mapa del Teatro con FOREACH (Asientos Libres y Ocupados)</h2>";
+
+                // Recorrido con for para crear los divs
+                echo '<div class="planoAsientos">';
+
+                echo '<div class="cabeceraAsientos">';
+                foreach ($aAsientosTeatro[1] as $indiceAsiento => $nombre) {
+                    echo "<div class='numAsiento'>Asiento {$indiceAsiento}</div>";
+                }
+                echo '</div>';
+
+                foreach ($aAsientosTeatro as $indiceFila => $filaActual) {
+                    echo '<div class="fila">';
+                    echo "<div class='nombreFila'>Fila {$indiceFila}</div>";
+                    foreach ($filaActual as $indiceAsiento => $nombre) {
+                        // Se dibujan los asientos en función del estado y contenido del asiento
+                        echo "<div class='asiento". (!empty($nombre)? ' ocupado' : ' libre'). "'>".
+                               (!empty($nombre) ? $nombre : "F{$f} A{$a}").
+                         "</div>";
+                    }
+                    echo "<div class='nombreFila'>Fila {$indiceFila}</div>";
+
+                    echo '</div>';
+                }
+                echo '<div class="pieAsientos">';
+                foreach ($aAsientosTeatro[1] as $indiceAsiento => $nombre) {
+                    echo "<div class='numAsiento'>Asiento {$indiceAsiento}</div>";
+                }
+                echo '</div>';
+
+                echo '</div>';
+
+                
+                
+                
+                //Mapa del teatro con While y las funciones para recorrer una array-------------------------------
+
+                echo "<h2><br><br>Mapa del Teatro con WHILE Y LAS FUNCIONES PARA RECORRER UN ARRAY (Asientos Libres y Ocupados)</h2>";
+
+                echo '<div class="planoAsientos">';
+
+                // Cabecera
+                echo '<div class="cabeceraAsientos">';
+                reset($aAsientosTeatro[1]);
+                while (($nombre = current($aAsientosTeatro[1])) !== false) {//mientras  haya una asiento en la fila 1
+                    $indiceAsiento = key($aAsientosTeatro[1]);
+                    echo "<div class='numAsiento'>Asiento {$indiceAsiento}</div>";
+                    next($aAsientosTeatro[1]); //pas a al asiento siguiente.
+                }
+                echo '</div>';
+
+                // Filas
+                reset($aAsientosTeatro);
+                while (($filaActual = current($aAsientosTeatro)) !== false) {
+                    $indiceFila = key($aAsientosTeatro);
+
+                    echo '<div class="fila">';
+                    echo "<div class='nombreFila'>Fila {$indiceFila}</div>";
+
+                    reset($filaActual); //se situa el puntero al comienzo del array
+                    while (($nombre = current($filaActual)) !== false) {
+                        $indiceAsiento = key($filaActual);
+
+                       
+                        // Se dibujan los asientos en función del estado y contenido del asiento
+                        echo "<div class='asiento". (!empty($nombre)? ' ocupado' : ' libre'). "'>".
+                               (!empty($nombre) ? $nombre : "F{$indiceFila} A{$indiceAsiento}").
+                         "</div>";
+
+                        next($filaActual);
+                    }
+                    echo "<div class='nombreFila'>Fila {$indiceFila}</div>";
+                    echo '</div>';
+
+                    next($aAsientosTeatro);
+                }
+
+                echo '<div class="pieAsientos">';
+                reset($aAsientosTeatro[1]);
+                while (($nombre = current($aAsientosTeatro[1])) !== false) {
+                    $indiceAsiento = key($aAsientosTeatro[1]);
+                    echo "<div class='numAsiento'>Asiento {$indiceAsiento}</div>";
+                    next($aAsientosTeatro[1]);
+                }
+                echo '</div>';
+
+                echo '</div>';
+                
+                
+                
+                //Mapa del teatro con 2 for---------------
+                echo "<h2>Mapa del Teatro con FOR (Asientos Libres y Ocupados)</h2>";
+
+                // Recorrido con for para crear los divs
+                echo '<div class="planoAsientos">';
+                echo '<div class="cabeceraAsientos">';
+                foreach ($aAsientosTeatro[1] as $indiceAsiento => $nombre) {
+                    echo "<div class='numAsiento'>Asiento {$indiceAsiento}</div>";
+                }
+                echo '</div>';
+                for ($f = 1; $f <= NUMFILAS; $f++) {
+                    echo '<div class="fila">'; // Inicio de la fila
+                    echo "<div class='nombreFila'>Fila {$f}</div>";
+                    for ($a = 1; $a <= NUMASIENTOXFILAS; $a++) {
+
+                        $nombre = $aAsientosTeatro[$f][$a];
+                        // Se dibujan los asientos en función del estado y contenido del asiento
+                        echo "<div class='asiento". (!empty($nombre)? ' ocupado' : ' libre'). "'>".
+                               (!empty($nombre) ? $nombre : "F{$f} A{$a}").
+                         "</div>";
+                    }
+                    echo "<div class='nombreFila'>Fila {$f}</div>";
+                    echo '</div>';
+                }
+                echo '<div class="cabeceraAsientos">';
+                foreach ($aAsientosTeatro[1] as $indiceAsiento => $nombre) {
+                    $asiento = $indiceAsiento;
+                    echo "<div class='numAsiento'>Asiento {$asiento}</div>";
+                }
+                echo '</div>';
+                echo '</div>';
+
+                
+                ?>  
+
+                
+<!--                echo "<h2>Mapa del Teatro (Asientos Libres y Ocupados)</h2>";
 
                 // Recorrido con for para crear los divs
                 echo '<div class="planoAsientos">';
@@ -129,113 +275,7 @@
                     echo "<div class='numAsiento'>Asiento {$asiento}</div>";
                 }
                 echo '</div>';
-                echo '</div>';
-
-                //Mapa del teatro con foreach -------------------------------
-
-                echo "<h2><br><br>Mapa del Teatro con foreach (Asientos Libres y Ocupados)</h2>";
-
-                // Recorrido con for para crear los divs
-                echo '<div class="planoAsientos">';
-
-                echo '<div class="cabeceraAsientos">';
-                foreach ($aAsientosTeatro[1] as $indiceAsiento => $nombre) {
-                    echo "<div class='numAsiento'>Asiento {$indiceAsiento}</div>";
-                }
-                echo '</div>';
-
-                foreach ($aAsientosTeatro as $indiceFila => $filaActual) {
-                    echo '<div class="fila">';
-                    echo "<div class='nombreFila'>Fila {$indiceFila}</div>";
-                    foreach ($filaActual as $indiceAsiento => $nombre) {
-                        // Estado y contenido del asiento
-                        if (!empty($nombre)) {
-                            // Ocupado
-                            $clase = 'ocupado';
-                            $textoAsiento = $nombre;
-                        } else {
-                            // Libre
-                            $clase = 'libre';
-                            $textoAsiento = "F{$indiceFila} A{$indiceAsiento}";
-                        }
-                        echo "<div class='asiento $clase' >";
-                        echo $textoAsiento;
-                        echo '</div>';
-                    }
-                    echo "<div class='nombreFila'>Fila {$indiceFila}</div>";
-
-                    echo '</div>';
-                }
-                echo '<div class="pieAsientos">';
-                foreach ($aAsientosTeatro[1] as $indiceAsiento => $nombre) {
-                    echo "<div class='numAsiento'>Asiento {$indiceAsiento}</div>";
-                }
-                echo '</div>';
-
-                echo '</div>';
-
-                
-                
-                
-                //Mapa del teatro con While y las funciones para recorrer una array-------------------------------
-
-                echo "<h2><br><br>Mapa del Teatro con while y las funciones para recorrer un array (Asientos Libres y Ocupados)</h2>";
-
-                echo '<div class="planoAsientos">';
-
-                // Cabecera
-                echo '<div class="cabeceraAsientos">';
-                reset($aAsientosTeatro[1]);
-                while (($nombre = current($aAsientosTeatro[1])) !== false) {//mientras  haya una asiento en la fila 1
-                    $indiceAsiento = key($aAsientosTeatro[1]);
-                    echo "<div class='numAsiento'>Asiento {$indiceAsiento}</div>";
-                    next($aAsientosTeatro[1]); //pas a al asiento siguiente.
-                }
-                echo '</div>';
-
-                // Filas
-                reset($aAsientosTeatro);
-                while (($filaActual = current($aAsientosTeatro)) !== false) {
-                    $indiceFila = key($aAsientosTeatro);
-
-                    echo '<div class="fila">';
-                    echo "<div class='nombreFila'>Fila {$indiceFila}</div>";
-
-                    reset($filaActual); //se situa el puntero al comienzo del array
-                    while (($nombre = current($filaActual)) !== false) {
-                        $indiceAsiento = key($filaActual);
-
-                        if (!empty($nombre)) {
-                            $clase = 'ocupado';
-                            $textoAsiento = $nombre;
-                        } else {
-                            $clase = 'libre';
-                            $textoAsiento = "F{$indiceFila} A{$indiceAsiento}";
-                        }
-                        echo "<div class='asiento $clase' >";
-                        echo $textoAsiento;
-                        echo '</div>';
-
-                        next($filaActual);
-                    }
-                    echo "<div class='nombreFila'>Fila {$indiceFila}</div>";
-                    echo '</div>';
-
-                    next($aAsientosTeatro);
-                }
-
-                echo '<div class="pieAsientos">';
-                reset($aAsientosTeatro[1]);
-                while (($nombre = current($aAsientosTeatro[1])) !== false) {
-                    $indiceAsiento = key($aAsientosTeatro[1]);
-                    echo "<div class='numAsiento'>Asiento {$indiceAsiento}</div>";
-                    next($aAsientosTeatro[1]);
-                }
-                echo '</div>';
-
-                echo '</div>';
-                ?>  
-
+                echo '</div>';-->
 
             </section>
 

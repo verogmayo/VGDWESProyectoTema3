@@ -6,9 +6,7 @@
         <title>Véro Grué - ProyectoTema3 Ejercicio18</title>
         <link rel="stylesheet" href="../webroot/css/styleEjercicios.css">
         <style>
-            *{
-                box-sizing:border-box;
-            }
+            
             .planoAsientos {
                 display: flex;
                 flex-direction: column;
@@ -52,7 +50,6 @@
             }
             .cabeceraAsientos, .pieAsientos{
                 display: flex;
-
                 color: white;
                 text-align: center;
             }
@@ -136,46 +133,43 @@
                  * 
                  */
                 function crearDivs($aAsientosTeatro, $filas, $asientosXFila) {
-                   echo '<div class="planoAsientos">';
-                echo '<div class="cabeceraAsientos">';
-                foreach ($aAsientosTeatro[1] as $indiceAsiento => $nombre) {
-                    echo "<div class='numAsiento'>Asiento {$indiceAsiento}</div>";
-                }
-                echo '</div>';
-                for ($f = 1; $f <= $filas; $f++) {//se puede empezar en la fila que se quiera en este caso el 1.
-                    echo '<div class="fila">'; // Inicio de la fila
-                    echo "<div class='nombreFila'>Fila {$f}</div>";
-                    for ($a = 1; $a <= $asientosXFila; $a++) {//se puede empezar en el asiento que se quiera en este caso  el 1
+                    echo '<div class="planoAsientos">';
+                    echo '<div class="cabeceraAsientos">';
+                    foreach ($aAsientosTeatro[1] as $indiceAsiento => $nombre) {
+                        echo "<div class='numAsiento'>Asiento {$indiceAsiento}</div>";
+                    }
+                    echo '</div>';
+                    for ($f = 1; $f <= $filas; $f++) {//se puede empezar en la fila que se quiera en este caso el 1.
+                        echo '<div class="fila">'; // Inicio de la fila
+                        echo "<div class='nombreFila'>Fila {$f}</div>";
+                        for ($a = 1; $a <= $asientosXFila; $a++) {//se puede empezar en el asiento que se quiera en este caso  el 1
+                            $nombre = $aAsientosTeatro[$f][$a];
+                            // Estado y contenido del asiento
+                            if (!empty($nombre)) {
+                                // ocupado
+                                $clase = 'ocupado';
+                                $textoAsiento = $nombre;
+                            } else {
+                                // libre
+                                $clase = 'libre';
+                                $textoAsiento = 'F' . $f . ' A' . $a;
+                            }
 
-                        $nombre = $aAsientosTeatro[$f][$a];
-                        // Estado y contenido del asiento
-                        if (!empty($nombre)) {
-                            // ocupado
-                            $clase = 'ocupado';
-                            $textoAsiento = $nombre;
-                        } else {
-                            // libre
-                            $clase = 'libre';
-                            $textoAsiento = 'F' . $f . ' A' . $a;
+                            echo "<div class='asiento $clase' title='Fila {$f}, Asiento {$a}'>";
+                            echo $textoAsiento;
+                            echo '</div>';
                         }
-
-                        echo "<div class='asiento $clase' title='Fila {$f}, Asiento {$a}'>";
-                        echo $textoAsiento;
+                        echo "<div class='nombreFila'>Fila {$f}</div>";
                         echo '</div>';
                     }
-                    echo "<div class='nombreFila'>Fila {$f}</div>";
+                    echo '<div class="cabeceraAsientos">';
+                    foreach ($aAsientosTeatro[1] as $indiceAsiento => $nombre) {
+                        $asiento = $indiceAsiento;
+                        echo "<div class='numAsiento'>Asiento {$asiento}</div>";
+                    }
+                    echo '</div>';
                     echo '</div>';
                 }
-                echo '<div class="cabeceraAsientos">';
-                foreach ($aAsientosTeatro[1] as $indiceAsiento => $nombre) {
-                    $asiento = $indiceAsiento;
-                    echo "<div class='numAsiento'>Asiento {$asiento}</div>";
-                }
-                echo '</div>';
-                echo '</div>';
-                }
-
-                
 
                 //creamos los divs con la funcion
                 crearDivs($aAsientosTeatro, $filas, $asientosXFila);
@@ -210,43 +204,43 @@
                  * 
                  */
                 function crearDivsForEach($aAsientosTeatro, $fila, $asientosXFila) {
-                   echo '<div class="planoAsientos">';
+                    echo '<div class="planoAsientos">';
 
-                echo '<div class="cabeceraAsientos">';
-                foreach ($aAsientosTeatro[1] as $indiceAsiento => $nombre) {
-                    echo "<div class='numAsiento'>Asiento {$indiceAsiento}</div>";
-                }
-                echo '</div>';
+                    echo '<div class="cabeceraAsientos">';
+                    foreach ($aAsientosTeatro[1] as $indiceAsiento => $nombre) {
+                        echo "<div class='numAsiento'>Asiento {$indiceAsiento}</div>";
+                    }
+                    echo '</div>';
 
-                foreach ($aAsientosTeatro as $indiceFila => $filaActual) {
-                    echo '<div class="fila">';
-                    echo "<div class='nombreFila'>Fila {$indiceFila}</div>";
-                    foreach ($filaActual as $indiceAsiento => $nombre) {
-                        // Estado y contenido del asiento
-                        if (!empty($nombre)) {
-                            // Ocupado
-                            $clase = 'ocupado';
-                            $textoAsiento = $nombre;
-                        } else {
-                            // Libre
-                            $clase = 'libre';
-                            $textoAsiento = "F{$indiceFila} A{$indiceAsiento}";
+                    foreach ($aAsientosTeatro as $indiceFila => $filaActual) {
+                        echo '<div class="fila">';
+                        echo "<div class='nombreFila'>Fila {$indiceFila}</div>";
+                        foreach ($filaActual as $indiceAsiento => $nombre) {
+                            // Estado y contenido del asiento
+                            if (!empty($nombre)) {
+                                // Ocupado
+                                $clase = 'ocupado';
+                                $textoAsiento = $nombre;
+                            } else {
+                                // Libre
+                                $clase = 'libre';
+                                $textoAsiento = "F{$indiceFila} A{$indiceAsiento}";
+                            }
+                            echo "<div class='asiento $clase' title='Fila {$indiceFila}, Asiento {$indiceAsiento}'>";
+                            echo $textoAsiento;
+                            echo '</div>';
                         }
-                        echo "<div class='asiento $clase' title='Fila {$indiceFila}, Asiento {$indiceAsiento}'>";
-                        echo $textoAsiento;
+                        echo "<div class='nombreFila'>Fila {$indiceFila}</div>";
+
                         echo '</div>';
                     }
-                    echo "<div class='nombreFila'>Fila {$indiceFila}</div>";
+                    echo '<div class="pieAsientos">';
+                    foreach ($aAsientosTeatro[1] as $indiceAsiento => $nombre) {
+                        echo "<div class='numAsiento'>Asiento {$indiceAsiento}</div>";
+                    }
+                    echo '</div>';
 
                     echo '</div>';
-                }
-                echo '<div class="pieAsientos">';
-                foreach ($aAsientosTeatro[1] as $indiceAsiento => $nombre) {
-                    echo "<div class='numAsiento'>Asiento {$indiceAsiento}</div>";
-                }
-                echo '</div>';
-
-                echo '</div>'; 
                 }
 
                 //creamos los divs con la funcion
