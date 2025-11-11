@@ -95,7 +95,7 @@
                 echo "<h2>Mapa del Teatro (Asientos Libres y Ocupados)</h2>";
 
                 // Recorrido con for para crear los divs
-                echo '<div class="planoAsientos">';
+                 echo '<div class="planoAsientos">';
                 echo '<div class="cabeceraAsientos">';
                 foreach ($aAsientosTeatro[1] as $indiceAsiento => $nombre) {
                     echo "<div class='numAsiento'>Asiento {$indiceAsiento}</div>";
