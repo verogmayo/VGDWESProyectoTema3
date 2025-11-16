@@ -5,34 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Véro Grué - ProyectoTema3 Ejercicio12</title>
         <link rel="stylesheet" href="../webroot/css/styleEjercicios.css">
-    </head>
-    <body>
-        <header class="header">
-            <a href="../indexProyectoTema3.php">volver</a>
-            <h1>Ejercicio 12</h1>
-        </header>
-        <main>
-            <section>
-                <?php
-                /**
-                 * @author Véronique Grué
-                 * @version 2.0
-                 * @date 2025-11-04 
-                 * 
-                 *
-                 * Ejercicio 12
-                 * * Mostrar el contenido de las variables superglobales
-                 */
-               
-
-               // session_start(); // Se debe ejecutar antes de llamarla, y tiene que estar antes de cualquier etiqueta de html
-                //Estilos para la tabla---------------------------------
-                echo' 
-                <style>
+        <style>
                 section{
                 width:80%;
                 margin-left:0;
-                padding-right 50px;
+                padding-right:50px;
                 }                
                 table {
                     border-collapse: collapse;
@@ -66,7 +43,29 @@
                     font-weight: 700;
                 }
                                 
-                </style>';
+                </style>
+    </head>
+    <body>
+        <header class="header">
+            <a href="../indexProyectoTema3.php">volver</a>
+            <h1>Ejercicio 12</h1>
+        </header>
+        <main>
+            <section>
+                <?php
+                /**
+                 * @author Véronique Grué
+                 * @version 2.0
+                 * @date 2025-11-04 
+                 * 
+                 *
+                 * Ejercicio 12
+                 * * Mostrar el contenido de las variables superglobales
+                 */
+               
+
+              
+               
 
                 //Contenido de la variable $_SERVER-----------------------------------------------
                 echo '<h3>Contenido de la variable $_SERVER</h3><br>';
