@@ -186,9 +186,9 @@
                         <button type="submit" name="submit">Enviar</button>
 
                     </form>  
-    <?php
-}
-?>
+                    <?php
+                    }
+                    ?>
             </section>
 
         </main>

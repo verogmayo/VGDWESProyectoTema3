@@ -8,6 +8,7 @@
     </head>
     <body>
         <header class="header">
+            <a href="../indexProyectoTema3.php">volver</a>
             <h1>Ejercicio 12</h1>
         </header>
         <main>
@@ -15,8 +16,8 @@
                 <?php
                 /**
                  * @author Véronique Grué
-                 * @version 1.0
-                 * @date 2025-10-13 
+                 * @version 2.0
+                 * @date 2025-11-04 
                  * 
                  *
                  * Ejercicio 12
@@ -24,7 +25,7 @@
                  */
                
 
-                session_start(); // Se debe ejecutar antes de llamarla, y tiene que estar antes de cualquier etiqueta de html
+               // session_start(); // Se debe ejecutar antes de llamarla, y tiene que estar antes de cualquier etiqueta de html
                 //Estilos para la tabla---------------------------------
                 echo' 
                 <style>
@@ -79,58 +80,10 @@
                         echo "</tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='2'><em>La variable \$_SESSION está vacía.</em></td></tr>";
+                    echo "<tr><td colspan='2'><em>La variable \$_SERVER está vacía.</em></td></tr>";
                 }
                 echo "</table>";
-
-                //Contenido de la variable $_GET-------------------------------------
-                echo '<br><br><h3>Contenido de la variable $_GET</h3><br>';
-                echo '<table >';
-                echo '<tr><th>Variable</th><th>Valor</th></tr>';
-                if (!empty($_GET)) {
-                    foreach ($_GET as $variable => $resultado) {
-                        echo "<tr>";
-                        echo '<td>$_GET[' . $variable . ']</td>';
-                        echo "<td><pre>" . print_r($resultado, true) . "</pre></td>";
-                        echo "</tr><br><br>";
-                    }
-                } else {
-                    echo "<tr><td colspan='2'><em>La variable \$_SESSION está vacía.</em></td></tr>";
-                }
-                echo "</table>";
-
-                //Contenido de la variable $_POST-----------------------------------------
-                echo '<br><br><h3>Contenido de la variable $_POST</h3><br>';
-                echo '<table >';
-                echo '<tr><th>Variable</th><th>Valor</th></tr>';
-                if (!empty($_POST)) {
-                    foreach ($_POST as $variable => $resultado) {
-                        echo "<tr>";
-                        echo '<td>$_POST[' . $variable . ']</td>';
-                        echo "<td><pre>" . print_r($resultado, true) . "</pre></td>";
-                        echo "</tr>";
-                    }
-                } else {
-                    echo "<tr><td colspan='2'><em>La variable \$_SESSION está vacía.</em></td></tr>";
-                }
-                echo "</table>";
-
-                //Contenido de la variable $_FILES-------------------------------------------
-                echo '<br><br><h3>Contenido de la variable $_FILES</h3><br>';
-                echo '<table >';
-                echo '<tr><th>Variable</th><th>Valor</th></tr>';
-                if (!empty($_FILES)) {
-                    foreach ($_FILES as $variable => $resultado) {
-                        echo "<tr>";
-                        echo '<td>$_FILES[' . $variable . ']</td>';
-                        echo "<td><pre>" . print_r($resultado, true) . "</pre></td>";
-                        echo "</tr>";
-                    }
-                } else {
-                    echo "<tr><td colspan='2'><em>La variable \$_SESSION está vacía.</em></td></tr>";
-                }
-                echo "</table>";
-
+                
                 //Contenido de la variable $_COOKIE---------------------------------------------------
                 echo '<br><br><h3>Contenido de la variable $_COOKIE</h3><br>';
                 echo '<table >';
@@ -143,7 +96,7 @@
                         echo "</tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='2'><em>La variable \$_SESSION está vacía.</em></td></tr>";
+                    echo "<tr><td colspan='2'><em>La variable \$_COOKIE está vacía.</em></td></tr>";
                 }
                 echo "</table>";
 
@@ -175,9 +128,59 @@
                         echo "</tr><br><br>";
                     }
                 } else {
-                    echo "<tr><td colspan='2'><em>La variable \$_SESSION está vacía.</em></td></tr>";
+                    echo "<tr><td colspan='2'><em>La variable \$_REQUEST está vacía.</em></td></tr>";
                 }
                 echo "</table>";
+                
+                //Contenido de la variable $_GET-------------------------------------
+                echo '<br><br><h3>Contenido de la variable $_GET</h3><br>';
+                echo '<table >';
+                echo '<tr><th>Variable</th><th>Valor</th></tr>';
+                if (!empty($_GET)) {
+                    foreach ($_GET as $variable => $resultado) {
+                        echo "<tr>";
+                        echo '<td>$_GET[' . $variable . ']</td>';
+                        echo "<td><pre>" . print_r($resultado, true) . "</pre></td>";
+                        echo "</tr><br><br>";
+                    }
+                } else {
+                    echo "<tr><td colspan='2'><em>La variable \$_GET está vacía.</em></td></tr>";
+                }
+                echo "</table>";
+
+                //Contenido de la variable $_POST-----------------------------------------
+                echo '<br><br><h3>Contenido de la variable $_POST</h3><br>';
+                echo '<table >';
+                echo '<tr><th>Variable</th><th>Valor</th></tr>';
+                if (!empty($_POST)) {
+                    foreach ($_POST as $variable => $resultado) {
+                        echo "<tr>";
+                        echo '<td>$_POST[' . $variable . ']</td>';
+                        echo "<td><pre>" . print_r($resultado, true) . "</pre></td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='2'><em>La variable \$_POST está vacía.</em></td></tr>";
+                }
+                echo "</table>";
+
+                //Contenido de la variable $_FILES-------------------------------------------
+                echo '<br><br><h3>Contenido de la variable $_FILES</h3><br>';
+                echo '<table >';
+                echo '<tr><th>Variable</th><th>Valor</th></tr>';
+                if (!empty($_FILES)) {
+                    foreach ($_FILES as $variable => $resultado) {
+                        echo "<tr>";
+                        echo '<td>$_FILES[' . $variable . ']</td>';
+                        echo "<td><pre>" . print_r($resultado, true) . "</pre></td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='2'><em>La variable \$_FILES está vacía.</em></td></tr>";
+                }
+                echo "</table>";
+
+                
 
                 //Contenido de la variable $_ENV-----------------------------------------------------
                 echo '<br><br><h3>Contenido de la variable $_ENV</h3><br>';
@@ -191,7 +194,7 @@
                         echo "</tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='2'><em>La variable \$_SESSION está vacía.</em></td></tr>";
+                    echo "<tr><td colspan='2'><em>La variable \$_ENV está vacía.</em></td></tr>";
                 }
                 echo "</table><br><br>";
                 ?>

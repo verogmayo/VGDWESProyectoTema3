@@ -16,31 +16,34 @@
     --colorTabla:#8cb6f5;
 }
 html{
-   height: 100%;
-  margin: 0;
+    height: 100%;
+    margin: 0;
 }
-header{
-  background-color: var(--headerColor);
-  margin: 0;
-  padding: 1rem;
-  color: blue;
+.header{
+    background-color: var(--headerColor);
+    margin: 0;
+    padding: 1rem;
+    color: blue;
+    display: flex;
+
 }
 body{
-  background-color: var(--secondColor);
-  margin: 0;
-   height: 100%;
-  display: flex;
-  flex-direction: column;
+    background-color: var(--secondColor);
+    margin: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 main{
-  width: 80%;
-  flex: 1;
+    width: 80%;
+    flex: 1;
 }
 section{
     margin-top: 40px;
 }
 h1 {
-  text-align: center;
+    text-align: center;
+    width:100%;
 }
 
 h2{
@@ -49,10 +52,12 @@ h2{
 }
 
 a {
-  text-decoration: none;
-  height: 10rem;
-  padding: 0 auto;
-  
+    text-decoration: none;
+    height: 2rem;
+    padding: 0 auto;
+    font-size: 1.3rem;
+    margin-left: 0;
+    color: blue;
 }
 
 footer{
@@ -65,9 +70,9 @@ footer{
     background-color: var(--headerColor);
 }
 footer a{
-  font-size: 18px;
-  color: blue;
-  background-color: var(--headerColor)
+    font-size: 18px;
+    color: blue;
+    background-color: var(--headerColor)
 }
 address{
     font-size: 15px;
