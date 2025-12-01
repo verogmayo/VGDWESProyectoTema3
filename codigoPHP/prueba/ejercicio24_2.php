@@ -34,13 +34,10 @@
                 display: inline-block;
                 margin-bottom: 50px;
             }
-            label{
-                width: auto;
-            }
             label#carnet{
                 display: inline-flex;
             }
-            form label:nth-of-type(4){
+            form label:nth-of-type(3){
                 width: 300px;
             }
             input#carnet{
@@ -53,7 +50,7 @@
             #preg{
                 width: 200px;
             }
-            #nombre, #preguntaSeguridad, #apellidos{
+            #nombre, #preguntaSeguridad{
                 background-color:rgb(252, 248, 204);
                 font-weight: bold;
             }
@@ -67,21 +64,8 @@
             #tipoFormulario{
                 background-color: gainsboro;
             }
-            .button{
-                margin-top: 100px;
-                font-size: 20px;
-                background-color: grey;
-                color: white;
-                padding: 10px;
-                border-radius: 5px;
-            }
-            p{
-                margin: 10px;
-                font-size: 16px;
-            }
-            .valorCampo{
-                color:blue;
-            }
+
+
         </style>
     </head>
     <body>
@@ -113,15 +97,13 @@
             /** @var array $aErrores Array para almacenar mensajes de error de validación. */
             $aErrores = [
                 'nombre' => '',
-                'apellidos'=>'',
-                'fNacimiento' => '',
+                'edad' => '',
                 'preguntaSeguridad' => '',
             ];
             /** @var array $aRespuestas Array para almacenar las repuestas. */
             $aRespuestas = [
                 'nombre' => '',
-                'apellidos'=>'',
-                'fNacimiento' => '',
+                'edad' => '',
                 'preguntaSeguridad' => '',
             ];
 
@@ -131,10 +113,8 @@
             //Para cada campo del formulario se valida la entrada y se actua en consecuencia
             if (isset($_REQUEST['enviar'])) {//se cumple si el boton es submit
                 //Validación de los datos de los campos del formulario
-                $aErrores['nombre'] = validacionFormularios::comprobarAlfabetico($_REQUEST['nombre'], 80, 2, 1);
-                $aErrores['apellidos'] = validacionFormularios::comprobarAlfabetico($_REQUEST['apellidos'], 150, 2, 1);
-                //la fecha de nacimiento no es un campo obligatorio.
-                $aErrores['fNacimiento'] = validacionFormularios::validarFecha($_REQUEST['fNacimiento']);
+                $aErrores['nombre'] = validacionFormularios::comprobarAlfabetico($_REQUEST['nombre'], 80, 10, 1);
+                $aErrores['edad'] = validacionFormularios::comprobarEntero($_REQUEST['edad'], 120, 0, 0);
                 // Pregunta de seguridad
                 $valoresValidos = ["Lola", "lola"]; // posibles valores válidos 
                 $aErrores['preguntaSeguridad'] = miLibreriaStatic::comprobarPreguntaSeguridad($_REQUEST['preguntaSeguridad'], $valoresValidos, 1);
@@ -153,27 +133,15 @@
             if ($entradaOK) {
                 //REllenamos el array de respuesta con los valores que ha introducido el usuario
                 $aRespuestas['nombre'] = $_REQUEST['nombre'];
-                $aRespuestas['apellidos'] = $_REQUEST['apellidos'];
-                $aRespuestas['fNacimiento'] = $_REQUEST['fNacimiento'];
+                $aRespuestas['edad'] = $_REQUEST['edad'];
                 $aRespuestas['preguntaSeguridad'] = $_REQUEST['preguntaSeguridad'];
 
                 //Se recorre el array de las respuestas y se muestran
-                echo '<div>';
                 print("<br><h3>Respuestas del usuario</h3><br>");
                 foreach ($aRespuestas as $campo => $valorCampo) {
-                    print("<p>$campo del usuario : <span class='valorCampo'>" . $valorCampo . '</span></p>');
+                    print("$campo del usuario : " . $valorCampo . '</br>');
                 }
-                if (isset($_REQUEST['boolean'])) {
-                    echo("<p class='valorCampo'>Tiene carnet de conducir</p>");
-                } else {
-                    echo "<p class='valorCampo'>No tiene carnet de conducir</p>";
-                }
-                echo '</div>';
-                echo '<div>';
-                echo "<br><a href='ejercicio24.php' class='button'>Volver al formulario</a>";
-                echo '</div>';
-                
-                } else {
+            } else {
                 //si hay algún error se vuelve a mostrar el formulario
                 ?>
                 <section>
@@ -183,17 +151,13 @@
                         <label for="tipoFormulario">Tipo del formulario</label><br>
                         <input name="tipoFormulario" id="tipoFormulario" type="text" value="Formulario de Seguridad" readonly><br>
                         
-                        <label for="nombre">Nombre: </label>
+                        <label for="nombre">Nombre completo:</label>
                         <a style='color:red'><?php echo $aErrores['nombre'] ?></a><br>
                         <input  name="nombre" id="nombre" type="text" value='<?php echo(empty($aErrores['nombre'])) ? ($_REQUEST['nombre'] ?? '') : ''; ?> '><br>
-                        
-                        <label for="apellidos">Apellidos: </label>
-                        <a style='color:red'><?php echo $aErrores['apellidos'] ?></a><br>
-                        <input  name="apellidos" id="apellidos" type="text" value='<?php echo(empty($aErrores['apellidos'])) ? ($_REQUEST['apellidos'] ?? '') : ''; ?> '><br>
 
-                        <label for="fNacimiento">Fecha de Nacimiento:</label><br>
-                        <a style='color:red'><?php echo $aErrores['fNacimiento'] ?></a><br>
-                        <input name="fNacimiento" id="fNacimiento" type="date" value=' <?php echo(empty($aErrores['fNacimiento'])) ? ($_REQUEST['fNacimiento'] ?? '') : ''; ?> '><br>
+                        <label for="edad">Edad:</label><br>
+                        <a style='color:red'><?php echo $aErrores['edad'] ?></a><br>
+                        <input name="edad" id="edad" type="number" value=' <?php echo(empty($aErrores['edad'])) ? ($_REQUEST['edad'] ?? '') : ''; ?> '><br>
 
                         <label for="preguntaSeguridad" id="preg">Pregunta de seguridad:</label>
                         <label for="preguntaSeguridad" class="preguntaSeguridad">Cual es el nombre de tu mascota? </label><br>

@@ -6,6 +6,9 @@
         <title>Véro Grué - ProyectoTema3 Ejercicio25</title>
         <link rel="stylesheet" href="../webroot/css/styleEjercicios.css">
         <style>
+            form{
+                width: 500px;
+            }
             label{
                 font-size: 20px;
                 margin-bottom: 10px;
@@ -50,7 +53,7 @@
             #preg{
                 width: 200px;
             }
-            #dni,#dniObligatorio, #nombre,#nombreObligatorio, #apellidos,#apellidosObligatorio, #fecha{
+            #dni,#dniObligatorio, #nombre, #nombreObligatorio, #apellidos, #apellidosObligatorio, #fecha{
                 background-color:rgb(252, 248, 204);
                 font-weight: bold;
             }
