@@ -97,58 +97,22 @@
                 /** @var array $aErrores Array para almacenar mensajes de error de validación. */
                 $aErrores = [
                     'dniObligatorio' => '',
-                    'dni' => '',
                     'nombreObligatorio' => '',
-                    'nombre' => '',
                     'apellidosObligatorio' => '',
-                    'apellidos' => '',
-                    'nombreCompletoObligatorio' => '',
-                    'nombreCompleto' => '',
-                    'fechaIntervaloObligatorio' => '',
-                    'fechaConTope' => '',
                     'fecha' => '',
-                    'telefonoObligatorio' => '',
                     'telefono' => '',
-                    'numEnteroObligatorio' => '',
-                    'numEntero' => '',
-                    'textoCortoObligatorio' => '',
-                    'textoCorto' => '',
-                    'cuadroListaObligatorio' => '',
-                    'textareaObligatorio' => '',
                     'textarea' => '',
-                    'emailObligatorio' => '',
-                    'email' => '',
-                    'fileObligatorio' => '',
-                    'file' => '',
-                    'password' => ''
+                    'email' => '' 
                 ];
                 /** @var array $aRespuestas Array para almacenar las repuestas. */
                 $aRespuestas = [
                     'dniObligatorio' => '',
-                    'dni' => '',
                     'nombreObligatorio' => '',
-                    'nombre' => '',
                     'apellidosObligatorio' => '',
-                    'apellidos' => '',
-                    'nombreCompletoObligatorio' => '',
-                    'nombreCompleto' => '',
-                    'fechaIntervaloObligatorio' => '',
-                    'fechaConTope' => '',
                     'fecha' => '',
-                    'telefonoObligatorio' => '',
                     'telefono' => '',
-                    'numEnteroObligatorio' => '',
-                    'numEntero' => '',
-                    'textoCortoObligatorio' => '',
-                    'textoCorto' => '',
-                    'cuadroListaObligatorio' => '',
-                    'textareaObligatorio' => '',
                     'textarea' => '',
-                    'emailObligatorio' => '',
-                    'email' => '',
-                    'fileObligatorio' => '',
-                    'file' => '',
-                    'password' => ''
+                    'email' => ''
                 ];
 
                 /** @boollean boolean $entradaOK Indica si los datos de entrada son correctos o no. */
@@ -158,30 +122,13 @@
                 if (isset($_REQUEST['enviar'])) {//se cumple si el boton es submit
                     //Validación de los datos de los campos del formulario
                     $aErrores['dniObligatorio'] = validacionFormularios::validarDni($_REQUEST['dniObligatorio'], 1);
-                    $aErrores['dni'] = validacionFormularios::validarDni($_REQUEST['dni']);
-                    $aErrores['nombreObligatorio'] = validacionFormularios::comprobarAlfabetico($_REQUEST['nombreObligatorio'], $maxTamanio, $minTamanio, 1);
-                    $aErrores['nombre'] = validacionFormularios::comprobarAlfabetico($_REQUEST['nombre'], $maxTamanio, $minTamanio, 0);
-                    $aErrores['apellidosObligatorio'] = validacionFormularios::comprobarAlfabetico($_REQUEST['apellidosObligatorio'], $maxTamanio, $minTamanio, 1);
-                    $aErrores['apellidos'] = validacionFormularios::comprobarAlfabetico($_REQUEST['apellidos'], $maxTamanio, $minTamanio, 0);
-                    $aErrores['nombreCompletoObligatorio'] = validacionFormularios::comprobarAlfabetico($_REQUEST['nombreCompletoObligatorio'], $minTamanio, 1, 1);
-                    $aErrores['nombreCompleto'] = validacionFormularios::comprobarAlfabetico($_REQUEST['nombreCompleto'], $maxTamanio, $minTamanio, 0);
-                    $aErrores['fechaIntervaloObligatoria'] = validacionFormularios::validarFecha($_REQUEST['fechaIntervaloObligatoria'], $fechaMaxima, $fechaMinima, 1);
-                    $aErrores['fechaConTope'] = validacionFormularios::validarFecha($_REQUEST['fechaConTope'], $fechaMaxima);
-                    $aErrores['fecha'] = validacionFormularios::validarFecha($_REQUEST['fecha']);
-                    $aErrores['telefonoObligatorio'] = validacionFormularios::validarTelefono($_REQUEST['telefonoObligatorio'], $obligatorio);
-                    $aErrores['telefono'] = validacionFormularios::validarTelefono($_REQUEST['telefono']);
-                    $aErrores['numEnteroObligatorio'] = validacionFormularios::comprobarEntero($_REQUEST['numEnteroObligatorio'], $max, $min, 1);
-                    $aErrores['numEntero'] = validacionFormularios::comprobarEntero($_REQUEST['numEntero']);
-                    $aErrores['textoCortoObligatorio'] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['textoCortoObligatorio'], $maxTamanio, $minTamanio, 1);
-                    $aErrores['textoCorto'] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['textoCorto']);
-                    $aErrores['cuadroListaObligatorio'] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['cuadroListaObligatorio'], $maxTamanio, $minTamanio, 1);
-                    $aErrores['textareaObligatorio'] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['textareaObligatorio'], $maxTamanio, $minTamanio, 1);
-                    $aErrores['textarea'] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['textareaCorto']);
-                    $aErrores['emailObligatorio'] = validacionFormularios::validarEmail($_REQUEST['email'], 1);
+                    $aErrores['nombreObligatorio'] = validacionFormularios::comprobarAlfabetico($_REQUEST['nombreObligatorio'], 50, 1, 1);
+                    $aErrores['apellidosObligatorio'] = validacionFormularios::comprobarAlfabetico($_REQUEST['apellidosObligatorio'],50, 1, 1);
+                    $aErrores['fecha'] = validacionFormularios::validarFecha($_REQUEST['fecha'],$fechaMaxima = '01/01/2200', $fechaMinima = "01/01/1900");
+                    $aErrores['telefono'] = validacionFormularios::validarTelefono($_REQUEST['telefono'],0);
+                    $aErrores['textarea'] = validacionFormularios::comprobarAlfaNumerico($_REQUEST['textarea'],50, 1, 0);
                     $aErrores['email'] = validacionFormularios::validarEmail($_REQUEST['email'], 0);
-                    $aErrores['passwordObligatorio'] = validacionFormularios::validarPassword($_REQUEST['passwordObligatorio'], $maximo, $minimo, $tipo, $obligatorio);
-                    $aErrores['password'] = validacionFormularios::validarPassword($_REQUEST['password']);
-
+                    
                     //recorre el array de errores para detectar si hay alguno
                     foreach ($aErrores as $campo => $valorCampo) {
                         if ($valorCampo != null) {//Si encuentra algún error 
@@ -196,26 +143,12 @@
                 if ($entradaOK) {
                     //REllenamos el array de respuesta con los valores que ha introducido el usuario
                     $aRespuestas['dniObligatorio'] = $_REQUEST['dniObligatorio'];
-                    $aRespuestas['dni'] = $_REQUEST['dni'];
                     $aRespuestas['nombreObligatorio'] = $_REQUEST['nombreObligatorio'];
-                    $aRespuestas['nombre'] = $_REQUEST['nombre'];
                     $aRespuestas['apellidosObligatorio'] = $_REQUEST['apellidosObligatorio'];
-                    $aRespuestas['apellidos'] = $_REQUEST['apellidos'];
-                    $aRespuestas['nombreCompletoObligatorio'] = $_REQUEST['nombreCompletoObligatorio'];
-                    $aRespuestas['nombreCompleto'] = $_REQUEST['nombreCompleto'];
-                    $aRespuestas['fechaIntervaloObligatoria'] = $_REQUEST['fechaIntervaloObligatoria'];
-                    $aRespuestas['fechaConTope'] = $_REQUEST['fechaConTope'];
                     $aRespuestas['fecha'] = $_REQUEST['fecha'];
-                    $aRespuestas['telefonoObligatorio'] = $_REQUEST['telefonoObligatorio'];
                     $aRespuestas['telefono'] = $_REQUEST['telefono'];
-                    $aRespuestas['numEnteroObligatorio'] = $_REQUEST['numEnteroObligatorio'];
-                    $aRespuestas['numEntero'] = $_REQUEST['numEntero'] ;
-                    $aRespuestas['textoCortoObligatorio'] = $_REQUEST['textoCortoObligatorio'];
-                    $aRespuestas['textoCorto'] = $_REQUEST['textoCorto'] ;
-                    $aRespuestas['emailObligatorio'] = $_REQUEST['emailObligatorio'];
                     $aRespuestas['email'] = $_REQUEST['email'];
-                    $aRespuestas['passwordObligatorio'] = $_REQUEST['passwordObligatorio'];
-                    $aRespuestas['password'] = $_REQUEST['password'];
+                    $aRespuestas['textarea'] = $_REQUEST['textarea'];
 
                             //Se recorre el array de las respuestas y se muestran
                             print("<br><h3>Respuestas del usuario</h3><br>");
@@ -234,7 +167,7 @@
                             
                             <label for="dniObligatorio">DNI:</label>
                             <a style='color:red'><?php echo $aErrores['dniObligatorio'] ?></a><br>
-                            <input name="dniObligatorio" id="dniObligatorio" type="text" value='<?php echo(empty($aErrores['dniObligatorio'])) ? ($_REQUEST['dniObligatorio'] ?? '') : ''; ?> '><br>
+                            <input name="dniObligatorio" id="dniObligatorio" type="text" value='<?php echo(empty($aErrores['dniObligatorio'])) ? ($_REQUEST['dniObligatorio'] ?? ''):'';?>'><br>
 
                             <label for="nombreObligatorio">Nombre:</label>
                             <a style='color:red'><?php echo $aErrores['nombreObligatorio'] ?></a><br>
@@ -243,7 +176,6 @@
                             <label for="apellidosObligatorio">Apellidos:</label>
                             <a style='color:red'><?php echo $aErrores['apellidosObligatorio'] ?></a><br>
                             <input name="apellidosObligatorio" id="apellidosObligatorio" type="text" value='<?php echo(empty($aErrores['apellidosObligatorio'])) ? ($_REQUEST['apellidosObligatorio'] ?? '') : ''; ?> '><br><!--  -->
-                            
                             
                             <label for="fecha">Fecha Nacimiento:</label>
                             <a style='color:red'><?php echo $aErrores['fecha'] ?? '' ?></a><br>
@@ -257,13 +189,10 @@
                             <a style='color:red'><?php echo $aErrores['email'] ?></a><br>
                             <input name="email" id="email" type="email" value='<?php echo(empty($aErrores['email'])) ? ($_REQUEST['email'] ?? '') : ''; ?> '><br>
                             
-                            <label for="textareaObligatorio">Comentario:</label>
-                            <a style='color:red'><?php echo $aErrores['textareaObligatorio'] ?? '' ?></a><br>
-                            <textarea name="textareaObligatorio" id="textareaObligatorio" rows="4" cols="50"><?php echo(empty($aErrores['textareaObligatorio'])) ? ($_REQUEST['textareaObligatorio'] ?? '') : ''; ?></textarea><br>
+                            <label for="textarea">Comentario:</label>
+                            <a style='color:red'><?php echo $aErrores['textarea'] ?? '' ?></a><br>
+                            <textarea name="textarea" id="textarea" rows="4" cols="50"><?php echo(empty($aErrores['textarea'])) ? ($_REQUEST['textarea'] ?? '') : ''; ?></textarea><br>
                             
-                            <label for="carnet">Marca si tienes carnet de conducir:</label>
-                            <input type="checkbox" name="boolean" id="carnet"><br>
-
                             <button type="submit" name="enviar">Enviar</button>
 
                         </form>  
